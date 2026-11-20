@@ -26,3 +26,9 @@ Two lookup tasks need about 80 calls in shapes A and B when made one per turn. A
 
 ## 18. Token counts are bytes / 4
 The prompt asks for provider usage when it exists. The agent reads `usage` when present and marks the episode `provider`, otherwise it estimates bytes / 4 and marks it `estimate`. The fake endpoint fills `usage` with the same estimate, so the scripted numbers are estimates either way, and the report says so.
+
+## 19. Cited numbers in the README prose
+The project rule is that no number is typed into the README. The generated blocks follow it. The related work part quotes the AIMultiple figures by name and link, because the prompt asks for that comparison, and the 10-minute heading and the 95% in the glossary name a method, not a result.
+
+## 20. Exported tool lists use the tools/list shape
+`toolcut export-tools` writes `{"tools": [...]}` for each shape, which is what `mcp-scanner static --tools` reads.

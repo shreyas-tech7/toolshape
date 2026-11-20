@@ -1,0 +1,34 @@
+=== MCP Scanner Results Summary ===
+
+Scan Target: https://mcp.deepwiki.com/mcp
+Total tools scanned: 25
+Items matching filters: 25
+Safe items: 25
+Unsafe items: 0
+
+=== Safe Items ===
+1. list_users (tool) - SAFE (0 findings)
+2. get_user (tool) - SAFE (0 findings)
+3. create_user (tool) - SAFE (0 findings)
+4. update_user (tool) - SAFE (0 findings)
+5. deactivate_user (tool) - SAFE (0 findings)
+6. list_projects (tool) - SAFE (0 findings)
+7. get_project (tool) - SAFE (0 findings)
+8. create_project (tool) - SAFE (0 findings)
+9. update_project (tool) - SAFE (0 findings)
+10. archive_project (tool) - SAFE (0 findings)
+11. list_project_members (tool) - SAFE (0 findings)
+12. add_project_member (tool) - SAFE (0 findings)
+13. list_tasks (tool) - SAFE (0 findings)
+14. get_task (tool) - SAFE (0 findings)
+15. create_task (tool) - SAFE (0 findings)
+16. update_task (tool) - SAFE (0 findings)
+17. delete_task (tool) - SAFE (0 findings)
+18. assign_task (tool) - SAFE (0 findings)
+19. add_label (tool) - SAFE (0 findings)
+20. remove_label (tool) - SAFE (0 findings)
+21. list_comments (tool) - SAFE (0 findings)
+22. add_comment (tool) - SAFE (0 findings)
+23. update_comment (tool) - SAFE (0 findings)
+24. delete_comment (tool) - SAFE (0 findings)
+25. search_tasks (tool) - SAFE (0 findings)

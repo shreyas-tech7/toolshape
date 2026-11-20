@@ -177,12 +177,35 @@ def model_status(record_state: Path | None) -> str:
             "(see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.")
 
 
+def status_line(sizes: dict, oracle: dict) -> str:
+    orc = [e for e in oracle["episodes"] if e["agent"] == "oracle"]
+    wrong = [e for e in oracle["episodes"] if e["agent"] != "oracle"]
+    n = oracle["meta"]["tasks"]
+    per = {k: sum(e["passed"] for e in orc if e["shape"] == k) for k in SHAPES}
+    solved = f"{per['A']} of {n} tasks in every shape" if len(set(per.values())) == 1 else ", ".join(f"{v} of {n} in {k}" for k, v in per.items())
+    a, c = sizes["shapes"]["A"]["bytes"], sizes["shapes"]["C"]["bytes"]
+    return (f"**Status:** v0.1.0-rc1, a release candidate. The oracle solves {solved} and the wrong agents solve "
+            f"{sum(e['passed'] for e in wrong)} of {len(wrong)}. Shape C's tool list is {c:,} bytes against {a:,} for shape A. "
+            "No real model has run yet, so the model results are blocked (see Limits).")
+
+
+def facts_line(sizes: dict) -> str:
+    from .taskdesk.ops import OPS
+
+    cats = sorted({t.category for t in TASKS})
+    t = {k: sizes["shapes"][k]["tools"] for k in SHAPES}
+    return (f"TaskDesk has {len(OPS)} endpoints. The benchmark has {len(TASKS)} tasks in {len(cats)} categories "
+            f"({', '.join(cats)}). Shape A has {t['A']} tools, shape B has {t['B']} and shape C has {t['C']}.")
+
+
 def sections(root: Path) -> dict[str, str]:
     res = root / "results"
     sizes = load(res / "tool_sizes.json")
     oracle = load(res / "oracle.json")
     run = load(root / "runs" / "scripted" / "state.json")
     return {
+        "status": status_line(sizes, oracle),
+        "facts": facts_line(sizes),
         "sizes": sizes_table(sizes),
         "results": oracle_table(oracle),
         "cost": cost_table(run),

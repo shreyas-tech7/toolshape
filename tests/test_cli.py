@@ -15,7 +15,7 @@ def test_sizes_reproduce_in_process(tmp_path):
 
 def test_export_tools(tmp_path):
     assert main(["export-tools", "--out", str(tmp_path)]) == 0
-    a = json.loads((tmp_path / "shape_A.json").read_text())
+    a = json.loads((tmp_path / "shape_A.json").read_text())["tools"]
     assert len(a) == 25 and {"name", "description", "inputSchema"} <= set(a[0])
 
 

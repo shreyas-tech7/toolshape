@@ -9,7 +9,7 @@ ROOT = Path(".")
 
 def test_sections_build_from_results():
     s = sections(ROOT)
-    assert set(s) == {"sizes", "results", "cost", "paired", "wins", "per_task", "model"}
+    assert set(s) == {"status", "facts", "sizes", "results", "cost", "paired", "wins", "per_task", "model"}
     assert "40/40" in s["results"]
     assert s["per_task"].count("\n| t") == 40
 

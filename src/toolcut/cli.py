@@ -81,7 +81,7 @@ def cmd_export_tools(a) -> int:
     with TaskDeskServer() as server:
         for shape in ("A", "B", "C"):
             defs = _tool_defs(shape, "inprocess", server.url)
-            _write_json(out / f"shape_{shape}.json", defs)
+            _write_json(out / f"shape_{shape}.json", {"tools": defs})
             print(f"wrote {out / f'shape_{shape}.json'}")
     return 0
 
@@ -91,6 +91,10 @@ def cmd_scripted(a) -> int:
     from .fake_provider import FakeProvider, oracle_traces
     from .runner import RunConfig, run
 
+    if a.fresh and Path(a.run_dir).exists():
+        import shutil
+
+        shutil.rmtree(a.run_dir)
     traces = oracle_traces()
     with FakeProvider(traces) as prov:
         cfg = RunConfig(Path(a.run_dir), model="fake-oracle-replay", provider_label="local fake endpoint", transport=a.transport,
@@ -205,6 +209,7 @@ def main(argv=None) -> int:
     sc.add_argument("--run-dir", default="runs/scripted")
     sc.add_argument("--transport", choices=["inprocess", "mcp"], default="inprocess")
     sc.add_argument("--max-turns", type=int, default=100)
+    sc.add_argument("--fresh", action="store_true", help="delete the run folder first and record again")
     sc.set_defaults(fn=cmd_scripted)
 
     r = sub.add_parser("record", help="record a resumable run against an OpenAI-compatible endpoint")

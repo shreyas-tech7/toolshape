@@ -1,0 +1,11 @@
+=== MCP Scanner Results Summary ===
+
+Scan Target: https://mcp.deepwiki.com/mcp
+Total tools scanned: 2
+Items matching filters: 2
+Safe items: 2
+Unsafe items: 0
+
+=== Safe Items ===
+1. search_api (tool) - SAFE (0 findings)
+2. run_code (tool) - SAFE (0 findings)
