@@ -9,8 +9,9 @@ import math
 from collections import defaultdict
 from pathlib import Path
 
-from .metrics import bootstrap_mean, paired_diff, wilson
-from .tasks import TASKS, TASKS_BY_ID
+from . import __version__
+from .metrics import BOOT_N, BOOT_SEED, bootstrap_mean, paired_diff, wilson
+from .tasks import TASKS
 
 SHAPES = ("A", "B", "C")
 SHAPE_NAMES = {"A": "A: one tool per endpoint", "B": "B: task-sized tools", "C": "C: search_api + run_code"}
@@ -72,7 +73,7 @@ def oracle_table(oracle: dict) -> str:
     m = oracle["meta"]
     rows.append("")
     rows.append(f"Source: `results/oracle.json`, {m['date']}, seed {m['seed']}, transport {m['transport']}, no model (scripted oracle). "
-                "Pass intervals are Wilson. Mean intervals are a bootstrap over the 40 tasks (2,000 resamples, seed 7). "
+                f"Pass intervals are Wilson. The oracle is deterministic, so its intervals describe the spread over these {len(TASKS)} tasks, not run to run noise. Mean intervals are a bootstrap over the {len(TASKS)} tasks ({BOOT_N:,} resamples, seed {BOOT_SEED}). "
                 "Seconds depend on the machine in `docs/ENVIRONMENT.md`.")
     return "\n".join(rows)
 
@@ -86,7 +87,11 @@ def _agent_eps(run: dict) -> dict[str, dict[str, dict]]:
     return out
 
 
-def cost_table(run: dict) -> str:
+SCRIPTED_NOTE = ("This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, "
+                 "so it shows the least an agent pays to make those calls.")
+
+
+def cost_table(run: dict, source: str = "runs/scripted/state.json", note: str = SCRIPTED_NOTE) -> str:
     agent = _agent_eps(run)
     rows = ["| Shape | Passes [95% CI] | Model turns per task | Input tokens per task [95% CI] | Output tokens per task | Of which tool definitions |",
             "|---|---|---:|---|---:|---:|"]
@@ -102,9 +107,11 @@ def cost_table(run: dict) -> str:
     m = run["meta"]
     src = {e["extra"].get("token_source") for s in agent.values() for e in s.values()}
     rows.append("")
-    rows.append(f"Source: `runs/scripted/state.json`, {m['created']}, model `{m['model']}` ({m['provider']}), transport {m['transport']}. "
-                f"This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, "
-                f"so it shows the least an agent pays to make those calls. Token source: {', '.join(sorted(src))} (bytes / 4).")
+    how = {"provider": "the usage field of each response", "estimate": "bytes / 4"}
+    if m["provider"] == "local fake endpoint":
+        how["provider"] = "the usage field of the local fake endpoint, which itself estimates bytes / 4"
+    rows.append(f"Source: `{source}`, {m['created']}, model `{m['model']}` ({m['provider']}), transport {m['transport']}. "
+                f"{note} Token counts come from {' and '.join(how[s] for s in sorted(src))}.")
     return "\n".join(rows)
 
 
@@ -119,7 +126,7 @@ def paired_table(oracle: dict, run: dict) -> str:
         dt = paired_diff([agent["A"][i]["extra"]["prompt_tokens"] for i in both], [agent[k][i]["extra"]["prompt_tokens"] for i in both])
         rows.append(f"| {k} minus A | {_ci(*dc, nd=2)} | {_ci(*dt, nd=0)} |")
     rows.append("")
-    rows.append("Paired by task. The interval resamples the 40 task pairs. Calls come from the oracle run and tokens from the scripted agent run.")
+    rows.append(f"Paired by task. The interval resamples the {len(ids)} task pairs. Calls come from the oracle run and tokens from the scripted agent run.")
     return "\n".join(rows)
 
 
@@ -143,7 +150,10 @@ def category_wins(oracle: dict, run: dict) -> list[dict]:
     out = []
     for cat, ids in cats.items():
         calls = {k: sum(orc[k][i]["tool_calls"] for i in ids) / len(ids) for k in SHAPES}
-        toks = {k: sum(agent[k][i]["extra"]["prompt_tokens"] for i in ids if i in agent[k]) / len(ids) for k in SHAPES}
+        toks = {}
+        for k in SHAPES:
+            have = [agent[k][i]["extra"]["prompt_tokens"] for i in ids if i in agent[k]]
+            toks[k] = sum(have) / len(have) if len(have) == len(ids) else float("inf")
         out.append({"category": cat, "tasks": len(ids), "calls": calls, "tokens": toks,
                     "fewest_calls": min(SHAPES, key=lambda k: (calls[k], k)), "fewest_tokens": min(SHAPES, key=lambda k: (toks[k], k))})
     return out
@@ -158,12 +168,16 @@ CATEGORY_TEXT = {
 }
 
 
+def _n(x: float) -> str:
+    return "n/a" if x == float("inf") else f"{x:,.0f}"
+
+
 def wins_table(oracle: dict, run: dict) -> str:
     rows = ["| Category | What it means | Tasks | Mean calls A / B / C | Mean input tokens A / B / C | Fewest tokens |", "|---|---|---:|---|---|---|"]
     for w in category_wins(oracle, run):
         c, t = w["calls"], w["tokens"]
         rows.append(f"| {w['category']} | {CATEGORY_TEXT.get(w['category'], '')} | {w['tasks']} | "
-                    f"{c['A']:.1f} / {c['B']:.1f} / {c['C']:.1f} | {t['A']:,.0f} / {t['B']:,.0f} / {t['C']:,.0f} | {w['fewest_tokens']} |")
+                    f"{c['A']:.1f} / {c['B']:.1f} / {c['C']:.1f} | {' / '.join(_n(t[k]) for k in SHAPES)} | {w['fewest_tokens']} |")
     rows.append("")
     rows.append("Computed from the oracle run and the scripted agent run. A real model adds wrong turns and retries that these numbers leave out.")
     return "\n".join(rows)
@@ -172,21 +186,23 @@ def wins_table(oracle: dict, run: dict) -> str:
 def model_status(record_state: Path | None) -> str:
     if record_state and Path(record_state).exists():
         run = load(record_state)
-        return cost_table(run).replace("runs/scripted/state.json", str(record_state))
-    return ("No run with a real model yet. This machine has no provider key and cannot reach api.groq.com or openrouter.ai "
+        return cost_table(run, source=str(record_state), note="A real model, recorded with `toolcut record`.")
+    return ("No run with a real model yet. The build machine had no provider key and could not reach api.groq.com or openrouter.ai "
             "(see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.")
 
 
-def status_line(sizes: dict, oracle: dict) -> str:
+def status_line(sizes: dict, oracle: dict, has_model: bool = False) -> str:
     orc = [e for e in oracle["episodes"] if e["agent"] == "oracle"]
     wrong = [e for e in oracle["episodes"] if e["agent"] != "oracle"]
     n = oracle["meta"]["tasks"]
     per = {k: sum(e["passed"] for e in orc if e["shape"] == k) for k in SHAPES}
     solved = f"{per['A']} of {n} tasks in every shape" if len(set(per.values())) == 1 else ", ".join(f"{v} of {n} in {k}" for k, v in per.items())
     a, c = sizes["shapes"]["A"]["bytes"], sizes["shapes"]["C"]["bytes"]
-    return (f"**Status:** v0.1.0-rc1, a release candidate. The oracle solves {solved} and the wrong agents solve "
+    version = __version__.replace("rc", "-rc")
+    return (f"**Status:** v{version}, a release candidate. The oracle solves {solved} and the wrong agents solve "
             f"{sum(e['passed'] for e in wrong)} of {len(wrong)}. Shape C's tool list is {c:,} bytes against {a:,} for shape A. "
-            "No real model has run yet, so the model results are blocked (see Limits).")
+            + ("A run with a real model is in the Results part." if has_model else
+               "No real model has run yet, so the model results are blocked (see Limits)."))
 
 
 def facts_line(sizes: dict) -> str:
@@ -204,7 +220,7 @@ def sections(root: Path) -> dict[str, str]:
     oracle = load(res / "oracle.json")
     run = load(root / "runs" / "scripted" / "state.json")
     return {
-        "status": status_line(sizes, oracle),
+        "status": status_line(sizes, oracle, (root / "runs" / "model" / "state.json").exists()),
         "facts": facts_line(sizes),
         "sizes": sizes_table(sizes),
         "results": oracle_table(oracle),
@@ -260,7 +276,8 @@ def stale(text: str, secs: dict[str, str]) -> list[str]:
 
 
 def est(nbytes: int) -> int:
+    """Tokens for a byte count, the same estimate the agent uses."""
     return math.ceil(nbytes / 4)
 
 
-__all__ = ["TASKS_BY_ID", "est", "fill", "full_report", "sections", "stale"]
+__all__ = ["est", "fill", "full_report", "sections", "stale"]

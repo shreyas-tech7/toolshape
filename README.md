@@ -50,11 +50,11 @@ Each shape runs as a real MCP server over stdio (`python -m toolcut.mcp_server -
 <!-- toolcut:results:start -->
 | Shape | Oracle passes [95% CI] | Wrong agents pass | Calls per task [95% CI] | Round-trip tokens per task [95% CI] | Seconds per task |
 |---|---|---|---|---|---:|
-| A: one tool per endpoint | 40/40 [91%, 100%] | 0/80 | 7.1 [3.1, 12.9] | 1,047 [572, 1,617] | 0.024 |
+| A: one tool per endpoint | 40/40 [91%, 100%] | 0/80 | 7.1 [3.1, 12.9] | 1,047 [572, 1,617] | 0.022 |
 | B: task-sized tools | 40/40 [91%, 100%] | 0/80 | 6.2 [2.5, 11.7] | 764 [338, 1,283] | 0.022 |
 | C: search_api + run_code | 40/40 [91%, 100%] | 0/80 | 2.0 [2.0, 2.0] | 1,603 [1,597, 1,608] | 0.084 |
 
-Source: `results/oracle.json`, 2026-11-20, seed 42, transport mcp, no model (scripted oracle). Pass intervals are Wilson. Mean intervals are a bootstrap over the 40 tasks (2,000 resamples, seed 7). Seconds depend on the machine in `docs/ENVIRONMENT.md`.
+Source: `results/oracle.json`, 2026-11-20, seed 42, transport mcp, no model (scripted oracle). Pass intervals are Wilson. The oracle is deterministic, so its intervals describe the spread over these 40 tasks, not run to run noise. Mean intervals are a bootstrap over the 40 tasks (2,000 resamples, seed 7). Seconds depend on the machine in `docs/ENVIRONMENT.md`.
 <!-- toolcut:results:end -->
 
 Tool definition sizes, read from each MCP server's tool list:
@@ -72,7 +72,7 @@ Source: `results/tool_sizes.json`, 2026-11-20, read over mcp. Tokens are bytes /
 Results with a real model:
 
 <!-- toolcut:model:start -->
-No run with a real model yet. This machine has no provider key and cannot reach api.groq.com or openrouter.ai (see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.
+No run with a real model yet. The build machine had no provider key and could not reach api.groq.com or openrouter.ai (see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.
 <!-- toolcut:model:end -->
 
 The full report, with every task, is in [docs/REPORT.md](docs/REPORT.md). The results page is [docs/index.html](docs/index.html).
@@ -88,7 +88,7 @@ A free model costs nothing per call, so the cost here is tokens. The scripted ru
 | B: task-sized tools | 40/40 [91%, 100%] | 7.2 | 38,707 [6,301, 86,827] | 301 | 8,964 |
 | C: search_api + run_code | 40/40 [91%, 100%] | 3.0 | 3,765 [3,749, 3,780] | 1,279 | 897 |
 
-Source: `runs/scripted/state.json`, 2026-11-20, model `fake-oracle-replay` (local fake endpoint), transport inprocess. This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, so it shows the least an agent pays to make those calls. Token source: provider (bytes / 4).
+Source: `runs/scripted/state.json`, 2026-11-20, model `fake-oracle-replay` (local fake endpoint), transport inprocess. This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, so it shows the least an agent pays to make those calls. Token counts come from the usage field of the local fake endpoint, which itself estimates bytes / 4.
 <!-- toolcut:cost:end -->
 
 Differences against shape A, paired by task:
@@ -154,7 +154,7 @@ To try your own tool design, follow [docs/ADDING_A_SHAPE.md](docs/ADDING_A_SHAPE
 - **Tokens are estimated:** the scripted run counts tokens as bytes / 4. A real run uses the provider's usage field when it has one and marks each episode with where its count came from.
 - **The oracle's scripts are long:** in shape C the oracle sends its whole helper library with every script, a few kilobytes of code. A model would write a shorter script, so shape C's output tokens in the scripted run are higher than a model's would be. The script also sits in the history that the next turn sends.
 - **One call per turn:** the scripted run makes one tool call per model turn. Real models can make several calls in one turn, which would help shapes A and B.
-- **The sandbox is not a security sandbox:** it guards this local benchmark only. It stops a script from opening sockets other than the fake API, reading or writing outside its temp folder, starting processes or running too long. A determined attacker with a CPython escape would get past it. Do not run code you do not trust with it. Details are in [docs/SECURITY_CHECKS.md](docs/SECURITY_CHECKS.md).
+- **The sandbox is not a security sandbox:** it guards this local benchmark only. It stops a script from opening sockets other than the fake API, reading or writing outside its temp folder, starting processes or running too long. An outside check found ways past an earlier version through Python's own introspection. Those are fixed and tested, but Python has many more, so a determined attacker could still get past it. Do not run code you do not trust with it. Details are in [docs/SECURITY_CHECKS.md](docs/SECURITY_CHECKS.md).
 - **Tool output is data:** the agent loop sends tool results back to the model as tool messages and its system prompt says they are never instructions. That lowers the risk of a planted instruction in the data. It does not remove it.
 
 ## Glossary

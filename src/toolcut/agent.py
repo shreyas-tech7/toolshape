@@ -19,7 +19,7 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 
-from .sessions import Session
+from .sessions import CallLog, Session
 from .tasks import PREAMBLE, Task
 
 MAX_TOOL_TEXT = 20_000
@@ -62,10 +62,17 @@ class HttpChat:
         self.wait = wait
         self.requests = 0
 
+    def _local(self) -> bool:
+        from urllib.parse import urlsplit
+
+        return urlsplit(self.base_url).hostname in ("127.0.0.1", "localhost")
+
     def complete(self, payload: dict) -> dict:
         headers = {"Content-Type": "application/json"}
         key = os.environ.get(self.key_env or "", "")
         if key:
+            if self.base_url.startswith("http://") and not self._local():
+                raise ChatError("refusing to send a key over plain http to a host that is not local")
             headers["Authorization"] = f"Bearer {key}"
         data = json.dumps(payload).encode()
         cafile = os.environ.get("SSL_CERT_FILE") or os.environ.get("REQUESTS_CA_BUNDLE")
@@ -80,14 +87,18 @@ class HttpChat:
                 with resp_cm as resp:
                     return json.loads(resp.read())
             except urllib.error.HTTPError as e:
-                if e.code in (429, 500, 502, 503) and attempt < 4:
+                if e.code in (429, 500, 502, 503, 504) and attempt < 4:
                     time.sleep(wait)
                     wait *= 2
                     continue
                 raise ChatError(f"HTTP {e.code} from {self.base_url}: {e.read()[:300]!r}") from None
-            except (urllib.error.URLError, TimeoutError) as e:
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+                if attempt < 4:
+                    time.sleep(wait)
+                    wait *= 2
+                    continue
                 raise ChatError(f"cannot reach {self.base_url}: {e}") from None
-        raise ChatError("too many retries")
+        raise AssertionError("unreachable")  # pragma: no cover
 
 
 @dataclass
@@ -137,6 +148,11 @@ class ReplayChat:
         self.i += 1
         return ex["response"]
 
+    def check_used(self) -> None:
+        """Raise if the loop stopped before it used every recorded exchange."""
+        if self.i != len(self.fixture.exchanges):
+            raise FixtureMismatch(f"the loop used {self.i} of {len(self.fixture.exchanges)} recorded exchanges")
+
 
 def run_agent(task: Task, session: Session, chat, model: str, max_turns: int = 20, temperature: float = 0.0) -> dict:
     """Drive the session with a model until it stops calling tools. Returns token and turn counts."""
@@ -175,6 +191,7 @@ def run_agent(task: Task, session: Session, chat, model: str, max_turns: int = 2
                 args = None
             if not isinstance(args, dict):
                 stats["bad_tool_calls"] += 1
+                session.log.append(CallLog(str(fn.get("name", "")), len((fn.get("arguments") or "").encode()), 0, 0.0, True))
                 text = "ERROR: the arguments were not a JSON object"
             else:
                 result = session.call(str(fn.get("name", "")), args)

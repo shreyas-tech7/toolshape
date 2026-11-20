@@ -27,12 +27,24 @@ def build_server(shape: Shape) -> Server:
     return Server(f"toolcut-shape-{shape.key.lower()}", on_list_tools=list_tools, on_call_tool=call_tool)
 
 
+def is_local_url(url: str) -> bool:
+    """True only for http://127.0.0.1:PORT or http://localhost:PORT, with no user info."""
+    from urllib.parse import urlsplit
+
+    try:
+        u = urlsplit(url)
+        port = u.port
+    except ValueError:
+        return False
+    return u.scheme == "http" and u.hostname in ("127.0.0.1", "localhost") and "@" not in u.netloc and port is not None
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--shape", required=True, choices=sorted(SHAPES))
     ap.add_argument("--api-url", required=True)
     args = ap.parse_args(argv)
-    if not args.api_url.startswith(("http://127.0.0.1:", "http://localhost:")):
+    if not is_local_url(args.api_url):
         raise SystemExit("toolcut serves the local fake API only (http://127.0.0.1:PORT)")
     server = build_server(SHAPES[args.shape](args.api_url))
 

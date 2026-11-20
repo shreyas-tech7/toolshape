@@ -102,3 +102,43 @@ def test_committed_scripted_run_is_complete():
     d = json.loads(open("runs/scripted/state.json").read())
     assert len(d["items"]) == 120
     assert all(v["status"] == DONE for v in d["items"].values())
+
+
+def test_resume_refuses_a_different_model(tmp_path, traces):
+    cfg = _cfg(tmp_path)
+    with FakeProvider(traces) as prov:
+        run(cfg, lambda: HttpChat(prov.url, "fake"), limit=1, log=lambda *_: None)
+    other = RunConfig(cfg.run_dir, model="other", task_ids=TASK_IDS, shapes=SHAPES, reps=2, max_turns=50)
+    with pytest.raises(ValueError, match="model"):
+        RunState.open(other)
+
+
+def test_resume_with_fewer_shapes_runs_only_those(tmp_path, traces):
+    cfg = _cfg(tmp_path)
+    with FakeProvider(traces) as prov:
+        run(cfg, lambda: HttpChat(prov.url, "fake"), limit=1, log=lambda *_: None)
+        only_c = RunConfig(cfg.run_dir, model="fake", task_ids=TASK_IDS, shapes=("C",), reps=2, max_turns=50)
+        st = run(only_c, lambda: HttpChat(prov.url, "fake"), log=lambda *_: None)
+    assert all(v["status"] == PENDING for k, v in st.items.items() if k.split("|")[1] == "A" and v["attempts"] == 0)
+    assert all(v["status"] == DONE for k, v in st.items.items() if k.split("|")[1] == "C")
+
+
+def test_replay_marks_a_missing_fixture_failed(tmp_path):
+    cfg = RunConfig(tmp_path / "r", model="fake", mode="replay", task_ids=("t01",), shapes=("A",), max_turns=5)
+    st = run(cfg, log=lambda *_: None)
+    assert st.items["t01|A|0"]["status"] == FAILED and "no fixture" in st.items["t01|A|0"]["error"]
+
+
+def test_replay_fails_when_recorded_exchanges_are_left_over(tmp_path, traces):
+    """Broken case: a fixture with an extra exchange replays as done though the loop stopped early."""
+    cfg = RunConfig(tmp_path / "r", model="fake", task_ids=("t01",), shapes=("A",), max_turns=50)
+    with FakeProvider(traces) as prov:
+        run(cfg, lambda: HttpChat(prov.url, "fake"), log=lambda *_: None)
+    fpath = fixture_path(cfg.run_dir, "t01|A|0")
+    d = json.loads(fpath.read_text())
+    d["exchanges"].append(d["exchanges"][-1])
+    fpath.write_text(json.dumps(d))
+    (cfg.run_dir / "state.json").unlink()
+    rcfg = RunConfig(cfg.run_dir, model="fake", mode="replay", task_ids=("t01",), shapes=("A",), max_turns=50)
+    st = run(rcfg, log=lambda *_: None)
+    assert st.items["t01|A|0"]["status"] == FAILED and "recorded exchanges" in st.items["t01|A|0"]["error"]

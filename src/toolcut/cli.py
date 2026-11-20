@@ -11,7 +11,11 @@ from pathlib import Path
 
 from . import __version__
 
-ROOT = Path.cwd()
+ROOT: Path | None = None  # tests set this. None means the current folder.
+
+
+def _root() -> Path:
+    return ROOT or Path.cwd()
 
 
 def _today() -> str:
@@ -91,10 +95,14 @@ def cmd_scripted(a) -> int:
     from .fake_provider import FakeProvider, oracle_traces
     from .runner import RunConfig, run
 
-    if a.fresh and Path(a.run_dir).exists():
+    run_dir = Path(a.run_dir)
+    if a.fresh and run_dir.exists():
         import shutil
 
-        shutil.rmtree(a.run_dir)
+        if not (run_dir / "state.json").is_file() or run_dir.resolve() == Path.cwd().resolve():
+            print(f"refusing to delete {run_dir}: it is not a run folder")
+            return 2
+        shutil.rmtree(run_dir)
     traces = oracle_traces()
     with FakeProvider(traces) as prov:
         cfg = RunConfig(Path(a.run_dir), model="fake-oracle-replay", provider_label="local fake endpoint", transport=a.transport,
@@ -108,12 +116,12 @@ def cmd_record(a) -> int:
     from .agent import HttpChat
     from .runner import RunConfig, run
 
+    extra = {"task_ids": tuple(a.tasks)} if a.tasks else {}
     cfg = RunConfig(Path(a.run_dir), model=a.model, provider_label=a.base_url, shapes=tuple(a.shapes),
-                    task_ids=tuple(a.tasks) if a.tasks else RunConfig.__dataclass_fields__["task_ids"].default,
-                    reps=a.reps, transport=a.transport, max_turns=a.max_turns)
+                    reps=a.reps, transport=a.transport, max_turns=a.max_turns, **extra)
     state = run(cfg, lambda: HttpChat(a.base_url, a.model, key_env=a.key_env, wait=a.wait), limit=a.limit)
     print(f"{a.run_dir}: {state.counts()}")
-    return 0
+    return 1 if state.counts()["failed"] else 0
 
 
 def cmd_replay(a) -> int:
@@ -125,17 +133,20 @@ def cmd_replay(a) -> int:
     src = Path(a.run_dir)
     meta = json.loads((src / "state.json").read_text())
     dst = Path(a.out)
+    s, d = src.resolve(), dst.resolve()
+    if s == d or s in d.parents or d in s.parents:
+        print("--out must be a separate folder from --run-dir")
+        return 2
     if (dst / "fixtures").exists():
         shutil.rmtree(dst / "fixtures")
     (dst / "state.json").unlink(missing_ok=True)
     shutil.copytree(src / "fixtures", dst / "fixtures")
-    keys = list(meta["items"])
+    keys = [k for k, it in meta["items"].items() if it["status"] == "done"]
     cfg = RunConfig(dst, model=meta["meta"]["model"], mode="replay", task_ids=tuple(sorted({k.split("|")[0] for k in keys})),
-                    shapes=tuple(sorted({k.split("|")[1] for k in keys})), transport=meta["meta"]["transport"],
-                    max_turns=meta["meta"]["max_turns"], provider_label="replay of " + str(src))
+                    shapes=tuple(sorted({k.split("|")[1] for k in keys})), reps=1 + max(int(k.split("|")[2]) for k in keys),
+                    transport=meta["meta"]["transport"], max_turns=meta["meta"]["max_turns"], provider_label="replay of " + str(src))
     state = run(cfg, log=(lambda *_: None))
-    diff = [k for k, it in meta["items"].items() if it["status"] == "done"
-            and state.items.get(k, {}).get("episode", {}).get("passed") != it["episode"]["passed"]]
+    diff = [k for k in keys if state.items.get(k, {}).get("episode", {}).get("passed") != meta["items"][k]["episode"]["passed"]]
     print(f"replayed {state.counts()['done']} items, {len(diff)} outcome differences")
     return 0 if not diff else 1
 
@@ -143,7 +154,7 @@ def cmd_replay(a) -> int:
 def cmd_report(a) -> int:
     from .report import full_report
 
-    Path(a.out).write_text(full_report(ROOT))
+    Path(a.out).write_text(full_report(_root()))
     print(f"wrote {a.out}")
     return 0
 
@@ -151,9 +162,9 @@ def cmd_report(a) -> int:
 def cmd_readme(a) -> int:
     from .report import fill, sections, stale
 
-    path = ROOT / "README.md"
+    path = _root() / "README.md"
     text = path.read_text()
-    secs = sections(ROOT)
+    secs = sections(_root())
     if a.check:
         bad = stale(text, secs)
         if bad:
@@ -225,7 +236,7 @@ def main(argv=None) -> int:
     r.add_argument("--run-dir", default="runs/model")
     r.add_argument("--base-url", required=True, help="for example https://api.groq.com/openai/v1")
     r.add_argument("--model", required=True)
-    r.add_argument("--key-env", default="GROQ_API_KEY", help="name of the env var that holds the key")
+    r.add_argument("--key-env", required=True, help="name of the env var that holds this provider's key, for example GROQ_API_KEY")
     r.add_argument("--shapes", nargs="+", default=["A", "B", "C"])
     r.add_argument("--tasks", nargs="*")
     r.add_argument("--reps", type=int, default=1)

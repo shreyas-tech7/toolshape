@@ -130,6 +130,13 @@ def ints_in(text: str) -> list[int]:
     return [int(x) for x in re.findall(r"\d+", text)]
 
 
+def id_list(text: str) -> list[int] | None:
+    """Parse "2, 24, 65" strictly. Anything else, like words around the ids, gives None."""
+    if not re.fullmatch(r"\s*\d+(\s*,\s*\d+)*\s*", text):
+        return None
+    return [int(x) for x in text.split(",")]
+
+
 def _comment_has(before: World, body: str) -> set[int]:
     return {c["task_id"] for c in before["comments"].values() if c["body"] == body}
 
@@ -261,7 +268,7 @@ TASKS: list[Task] = [
       every(lambda b: _comment_has(b, "Customer reported this again."), "+label", "customer"),
       lambda b: {"tasks": _comment_has(b, "Customer reported this again.")}),
     T("t39", "lookup", "List the ids of every open task with urgent priority in the Website Relaunch project. Add them as one comment on task 2, written by Priya Raman: the ids only, in increasing order, separated by commas.",
-      one_new_comment(2, "Priya Raman", lambda s, b: ints_in(s) == sorted(tasks_where(b, lambda t: t["status"] != "done" and t["priority"] == "urgent"
+      one_new_comment(2, "Priya Raman", lambda s, b: id_list(s) == sorted(tasks_where(b, lambda t: t["status"] != "done" and t["priority"] == "urgent"
                                                                                        and t["project_id"] == pid(b, "Website Relaunch"))), "the urgent open ids"),
       create=("comments",)),
     T("t40", "lookup", 'Create a user named "Ravi Patel" with the email ravi.patel@taskdesk.test. Add the new user to the Data Platform project, then assign task 21 to the new user.',
@@ -272,3 +279,37 @@ TASKS: list[Task] = [
 ]
 
 TASKS_BY_ID = {t.id: t for t in TASKS}
+
+
+def _labels(*names):
+    return lambda b, a: set(names)
+
+
+def _users(*names):
+    return lambda b, a: {uid(b, n) for n in names}
+
+
+def _new_users(b, a):
+    return set(a["users"]) - set(b["users"])
+
+
+ANY = "*"
+# Which fields each task may change on the rows its touch() allows. A list field (labels, members)
+# maps to a function that gives the items that may be added or removed. "updated_at" may always change.
+# A task that is not listed may change only what touch() allows, and touch() allows nothing by default.
+FIELDS: dict[str, dict] = {
+    "t01": {"tasks": {"status": None}}, "t02": {"tasks": {"priority": None}}, "t03": {"tasks": {"due": None}},
+    "t04": {"tasks": {"labels": _labels("security")}}, "t05": {"tasks": {"labels": _labels("design")}},
+    "t07": {"tasks": ANY, "comments": ANY}, "t08": {"tasks": {"assignee_id": None}}, "t09": {"tasks": {"assignee_id": None}},
+    "t12": {"projects": {"name": None}}, "t13": {"users": {"active": None}}, "t14": {"users": {"role": None}},
+    "t15": {"projects": {"members": _users("Grace Liu")}}, "t16": {"projects": {"owner_id": None}},
+    "t17": {"projects": {"members": _users("Grace Liu")}, "tasks": {"assignee_id": None}},
+    "t19": {"tasks": {"status": None}}, "t20": {"comments": {"body": None}}, "t21": {"comments": ANY},
+    "t22": {"projects": {"status": None}}, "t24": {"tasks": {"assignee_id": None}},
+    "t25": {"tasks": {"labels": _labels("overdue")}}, "t26": {"tasks": {"labels": _labels("overdue")}},
+    "t27": {"users": {"active": None}, "tasks": {"assignee_id": None}}, "t28": {"tasks": {"priority": None}},
+    "t29": {"tasks": {"status": None}}, "t30": {"tasks": {"labels": _labels("docs")}}, "t31": {"tasks": {"assignee_id": None}},
+    "t33": {"users": {"role": None}}, "t36": {"tasks": {"priority": None}}, "t37": {"tasks": {"due": None}},
+    "t38": {"tasks": {"labels": _labels("customer")}},
+    "t40": {"projects": {"members": _new_users}, "tasks": {"assignee_id": None}},
+}

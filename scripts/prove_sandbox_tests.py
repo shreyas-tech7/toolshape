@@ -11,8 +11,9 @@ CODE = r'''
 import sys
 import pytest
 import toolcut.sandbox as s
-s.BOOTSTRAP = s.BOOTSTRAP.replace("sys.addaudithook(_hook)", "pass").replace(
-    "resource.setrlimit(resource.RLIMIT_AS, (mem, mem))", "pass")
+for old in ("sys.addaudithook(hook)", "resource.setrlimit(resource.RLIMIT_AS, (mem, mem))"):
+    assert old in s.BOOTSTRAP, "the bootstrap changed, update this script: " + old
+    s.BOOTSTRAP = s.BOOTSTRAP.replace(old, "pass")
 sys.exit(pytest.main(["-q", "-p", "no:cacheprovider", "tests/test_sandbox.py", "-k",
                       "raw_socket or files_outside or memory or subprocess"]))
 '''

@@ -118,7 +118,7 @@ def test_bad_arguments_are_counted_and_reported(api):
     chat = ScriptChat([_call("get_task", "not json"), {"role": "assistant", "content": "Done."}])
     with InProcessSession("A", api.url) as s:
         stats = run_agent(TASKS_BY_ID["t01"], s, chat, "m")
-        assert s.log == []
+        assert len(s.log) == 1 and s.log[0].name == "get_task" and s.log[0].is_error
     assert stats["bad_tool_calls"] == 1
 
 
@@ -210,3 +210,23 @@ def test_http_chat_gives_up_on_400(flaky):
 def test_http_chat_to_an_outside_host_is_blocked_in_tests():
     with pytest.raises(Exception, match="network"):
         HttpChat("http://203.0.113.9", "m", timeout=1).complete({})
+
+
+def test_key_is_never_sent_over_plain_http_to_another_host(monkeypatch):
+    monkeypatch.setenv("TOOLCUT_TEST_KEY", "k-test")
+    with pytest.raises(ChatError, match="plain http"):
+        HttpChat("http://203.0.113.9/v1", "m", key_env="TOOLCUT_TEST_KEY").complete({})
+
+
+def test_base_url_needs_http_scheme():
+    with pytest.raises(ValueError):
+        HttpChat("file:///etc/passwd", "m")
+
+
+def test_http_chat_retries_a_lost_connection(flaky):
+    httpd, url = flaky
+    port = httpd.server_address[1]
+    httpd.shutdown()
+    httpd.server_close()
+    with pytest.raises(ChatError, match="cannot reach"):
+        HttpChat(f"http://127.0.0.1:{port}", "m", wait=0, timeout=2).complete({})

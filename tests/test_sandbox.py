@@ -14,7 +14,10 @@ def test_reaches_the_fake_api(api):
 
 def test_network_other_hosts_blocked_by_client_redirect(api):
     """Broken case: a script points the client at another host and connects out."""
-    r = run_code("taskdesk.base_url = 'http://10.1.2.3:80'\ntaskdesk.get_task(task_id=1)", api.url, timeout=5)
+    code = "taskdesk.base_url = 'http://10.1.2.3:80'\nprint(taskdesk.get_task(task_id=1)['id'])"
+    r = run_code(code, api.url, timeout=5)  # the script's taskdesk holds only the ops, so this changes nothing
+    assert r.error is None and r.stdout.strip() == "1"
+    r = run_code(code, api.url, timeout=5, skip_ast_check=True)  # the real client, with only the audit hook
     assert r.error and "network blocked" in r.error
 
 
@@ -110,3 +113,51 @@ def test_ast_allows_plain_code():
 def test_rejected_script_does_not_run(api):
     r = run_code("import os\nprint('ran')", api.url)
     assert r.error.startswith("ScriptRejected") and r.stdout == ""
+
+
+# Probes from the outside check. Each one got past the sandbox before the fix.
+
+@pytest.mark.parametrize("code,word", [
+    ("import statistics\nm = statistics.sys.modules['__main__']", "modules"),
+    ("def g():\n    yield 1\nx = g()\nprint(x.gi_frame)", "gi_frame"),
+    ("print('{0.get_task}'.format(taskdesk))", "format"),
+    ("print('{x}'.format_map({'x': 1}))", "format_map"),
+    ("try:\n    1/0\nexcept Exception as e:\n    print(e.with_traceback(None))", "with_traceback"),
+    ("match 'a':\n    case str(__class__=c):\n        print(c)", "__class__"),
+])
+def test_escape_probes_are_rejected_by_the_ast_check(code, word):
+    with pytest.raises(ScriptRejected, match=word):
+        check_script(code)
+
+
+def test_allowed_modules_expose_no_submodules(api):
+    """Broken case: statistics.sys reached the real sys module and through it __main__."""
+    code = "import statistics, json, re, datetime\nprint(hasattr(statistics, 'sys'), hasattr(json, 'decoder'), hasattr(re, 'enum'), hasattr(datetime, 'sys'))"
+    r = run_code(code, api.url)
+    assert r.error is None and r.stdout.split() == ["False"] * 4
+
+
+def test_taskdesk_holds_only_the_operations(api):
+    r = run_code("print(hasattr(taskdesk, 'call'), hasattr(taskdesk, 'base_url'), hasattr(taskdesk, 'get_task'))", api.url)
+    assert r.error is None and r.stdout.split() == ["False", "False", "True"]
+
+
+def test_hook_settings_are_not_in_main_globals(api):
+    """Broken case: a script rewrote TMP or API in __main__ and the hook read the new value."""
+    code = "import sys\nm = sys.modules['__main__']\nprint([n for n in ('TMP', 'API', 'ALLOWED_MODULES', 'BLOCK_PREFIX', 'hook', 'cfg') if hasattr(m, n)])"
+    r = run_code(code, api.url, skip_ast_check=True)
+    assert r.error is None and r.stdout.strip() == "[]"
+
+
+def test_os_is_not_reachable_through_an_allowed_module(api):
+    """Broken case: a script reached os or sys through a module it was allowed to import."""
+    code = "import datetime, functools, itertools, collections, math\nprint([hasattr(m, 'os') or hasattr(m, 'sys') for m in (datetime, functools, itertools, collections, math)])"
+    r = run_code(code, api.url)
+    assert r.error is None and "True" not in r.stdout
+
+
+def test_proc_files_blocked(api):
+    """Broken case: the script read the parent's environment through /proc."""
+    for path in ("/proc/self/environ", f"/proc/{os.getpid()}/environ", "/etc/hostname"):
+        r = run_code(f"print(open({path!r}).read())", api.url)
+        assert r.error and "file access blocked" in r.error, path

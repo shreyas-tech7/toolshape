@@ -59,3 +59,57 @@ def test_a_check_that_cannot_read_the_state_fails_cleanly():
     t01 = next(t for t in TASKS if t.id == "t01")
     s = score(t01, before, after)
     assert not s.passed and s.reasons
+
+
+def _t(task_id):
+    return next(t for t in TASKS if t.id == task_id)
+
+
+def test_every_task_that_touches_rows_lists_its_fields():
+    from toolcut.tasks import FIELDS
+
+    w = seed_world()
+    for t in TASKS:
+        for table, ids in t.touch(w).items():
+            if ids:
+                assert table in FIELDS.get(t.id, {}), (t.id, table)
+
+
+def test_extra_field_on_an_allowed_row_fails():
+    """Outside check finding: the right change plus a new title on the same task passed."""
+    before, after = seed_world(), seed_world()
+    after["tasks"][13]["status"] = "done"
+    after["tasks"][13]["title"] = "renamed"
+    s = score(_t("t01"), before, after)
+    assert not s.passed and any("field title changed" in r for r in s.reasons)
+
+
+def test_extra_member_or_rename_on_the_project_fails():
+    from toolcut.tasks import pid, uid
+
+    before = seed_world()
+    p, grace = pid(before, "Mobile App"), uid(before, "Grace Liu")
+    after = seed_world()
+    after["projects"][p]["members"] = sorted(set(after["projects"][p]["members"]) | {grace})
+    assert score(_t("t15"), before, after).passed
+    renamed = seed_world()
+    renamed["projects"][p]["members"] = sorted(set(renamed["projects"][p]["members"]) | {grace})
+    renamed["projects"][p]["name"] = "Other"
+    assert not score(_t("t15"), before, renamed).passed
+    removed = seed_world()
+    removed["projects"][p]["members"] = [grace]
+    assert not score(_t("t15"), before, removed).passed
+
+
+def test_extra_label_fails():
+    before, after = seed_world(), seed_world()
+    after["tasks"][24]["labels"] = sorted(set(after["tasks"][24]["labels"]) | {"security", "other"})
+    assert not score(_t("t04"), before, after).passed
+
+
+def test_id_list_answer_must_be_ids_only():
+    from toolcut.tasks import id_list
+
+    assert id_list("2, 24,65") == [2, 24, 65]
+    assert id_list("Urgent ids: 2 and 24") is None
+    assert id_list("") is None

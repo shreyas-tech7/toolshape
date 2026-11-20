@@ -8,7 +8,7 @@ It measures how the design of MCP tools changes what an agent pays and whether i
 
 ## Why hold the API fixed?
 
-A fixed API isolates the design choice. If you compare two real MCP servers, they differ in API, data, error messages and task difficulty all at once, so you cannot say which difference moved the result. Here every shape calls the same typed client over the same seeded data, and `tests/test_capability_matrix.py` proves every operation has the same effect through every shape. Any gap in the results comes from the tools alone.
+A fixed API isolates the design choice. If you compare two real MCP servers, they differ in API, data, error messages and task difficulty all at once, so you cannot say which difference moved the result. Here every shape calls the same typed client over the same seeded data, and `tests/test_capability_matrix.py` proves every operation has the same effect through every shape. So a gap in the results comes from the tool layer, within the limits of one fake API, 40 tasks and a scripted agent that is not a language model.
 
 ## What does each shape cost in tokens?
 
@@ -32,7 +32,7 @@ After the task's own check, a collateral check compares every row the task was n
 
 ## What does the sandbox protect, and what does it not?
 
-It stops a run_code script from opening sockets other than the fake API, opening files outside its temp folder, starting processes, running past its CPU or wall time and using too much memory. It does this with rlimits, a timeout, a CPython audit hook and an AST allowlist. It does not protect against a CPython escape, because audit hooks run in the same interpreter as the script, and it has no seccomp, namespaces or container. It guards this local benchmark only and is not a security sandbox. See `src/toolcut/sandbox.py` and `docs/SECURITY_CHECKS.md`.
+It stops a run_code script from opening sockets other than the fake API, opening files outside its temp folder, starting processes, running past its CPU or wall time and using too much memory. It does this with rlimits, a timeout, a CPython audit hook, an AST check and restricted builtins that hand out public-only copies of the allowed modules. An outside check found four ways past an earlier version through Python introspection, such as walking generator frames to reach the hook's settings. I fixed each and added a test, but audit hooks run in the same interpreter as the script, so more paths like that likely exist, and it has no seccomp, namespaces or container. It guards this local benchmark only and is not a security sandbox. See `src/toolcut/sandbox.py` and `docs/SECURITY_CHECKS.md`.
 
 ## How do you know the sandbox tests can fail?
 

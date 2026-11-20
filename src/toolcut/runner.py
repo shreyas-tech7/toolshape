@@ -44,6 +44,7 @@ class RunState:
         self.path = path
         self.meta = meta
         self.items = items
+        self.scope: set[str] | None = None
 
     @classmethod
     def open(cls, cfg: RunConfig) -> RunState:
@@ -51,13 +52,21 @@ class RunState:
         keys = [item_key(t, s, r) for t in cfg.task_ids for s in cfg.shapes for r in range(cfg.reps)]
         if path.exists():
             d = json.loads(path.read_text())
+            for field_name in ("model", "transport", "max_turns"):
+                if d["meta"].get(field_name) != getattr(cfg, field_name):
+                    raise ValueError(f"{path} was recorded with {field_name}={d['meta'].get(field_name)!r}. "
+                                     "Use a new --run-dir for a different setting.")
             items = d["items"]
             for k in keys:
                 items.setdefault(k, {"status": PENDING, "attempts": 0})
-            return cls(path, d["meta"], items)
+            st = cls(path, d["meta"], items)
+            st.scope = set(keys)
+            return st
         meta = {"model": cfg.model, "mode": cfg.mode, "provider": cfg.provider_label, "transport": cfg.transport,
                 "max_turns": cfg.max_turns, "created": time.strftime("%Y-%m-%d", time.gmtime())}
-        return cls(path, meta, {k: {"status": PENDING, "attempts": 0} for k in keys})
+        st = cls(path, meta, {k: {"status": PENDING, "attempts": 0} for k in keys})
+        st.scope = set(keys)
+        return st
 
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -72,7 +81,8 @@ class RunState:
         return out
 
     def todo(self, max_attempts: int) -> list[str]:
-        return [k for k, it in self.items.items() if it["status"] == PENDING or (it["status"] == FAILED and it["attempts"] < max_attempts)]
+        return [k for k, it in self.items.items() if (self.scope is None or k in self.scope)
+                and (it["status"] == PENDING or (it["status"] == FAILED and it["attempts"] < max_attempts))]
 
 
 def fixture_path(run_dir: Path, key: str) -> Path:
@@ -95,6 +105,10 @@ def run(cfg: RunConfig, chat_factory=None, limit: int | None = None, log=print) 
                 item["attempts"] += 1
                 fpath = fixture_path(cfg.run_dir, key)
                 if cfg.mode == "replay":
+                    if not fpath.exists():
+                        item.update(status=FAILED, error="no fixture recorded for this item")
+                        state.save()
+                        continue
                     chat = ReplayChat(Fixture.load(fpath))
                     fixture = None
                 else:
@@ -104,7 +118,10 @@ def run(cfg: RunConfig, chat_factory=None, limit: int | None = None, log=print) 
                     sessions[shape] = open_session(shape, server.url, cfg.transport)
 
                 def agent(task, session, chat=chat):
-                    return run_agent(task, session, chat, cfg.model, max_turns=cfg.max_turns)
+                    stats = run_agent(task, session, chat, cfg.model, max_turns=cfg.max_turns)
+                    if isinstance(chat, ReplayChat):
+                        chat.check_used()
+                    return stats
 
                 agent.name = "model"
                 ep = run_episode(server, sessions[shape], TASKS_BY_ID[task_id], shape, agent)
@@ -122,7 +139,3 @@ def run(cfg: RunConfig, chat_factory=None, limit: int | None = None, log=print) 
                 s.close()
     return state
 
-
-def episodes(state_path: Path) -> list[dict]:
-    d = json.loads(Path(state_path).read_text())
-    return [it["episode"] for it in d["items"].values() if it["status"] == DONE]

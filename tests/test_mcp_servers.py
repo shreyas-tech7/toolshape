@@ -31,3 +31,13 @@ def test_mcp_server_refuses_a_non_local_api():
 
     with pytest.raises(SystemExit):
         main(["--shape", "A", "--api-url", "http://10.0.0.1:80"])
+
+
+def test_server_accepts_only_local_api_urls():
+    from toolcut.mcp_server import is_local_url
+
+    assert is_local_url("http://127.0.0.1:8000")
+    assert is_local_url("http://localhost:9/x")
+    for bad in ("http://localhost:@evil.test/", "http://127.0.0.1.evil.test:80", "https://127.0.0.1:80",
+                "http://10.0.0.1:80", "http://127.0.0.1", "http://user@127.0.0.1:80"):
+        assert not is_local_url(bad), bad

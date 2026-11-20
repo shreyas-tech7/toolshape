@@ -36,7 +36,7 @@ class Session:
     def call(self, name: str, args: dict) -> ToolResult:
         start = time.perf_counter()
         result = self._call(name, args)
-        self.log.append(CallLog(name, len(json.dumps(args, separators=(",", ":"))), len(result.text.encode()),
+        self.log.append(CallLog(name, len(json.dumps(args, separators=(",", ":"), ensure_ascii=False).encode()), len(result.text.encode()),
                                 time.perf_counter() - start, result.is_error))
         return result
 
@@ -73,8 +73,12 @@ class McpSession(Session):
         self._portal_cm = start_blocking_portal()
         self._portal = self._portal_cm.__enter__()
         params = StdioServerParameters(command=sys.executable, args=["-m", "toolcut.mcp_server", "--shape", shape_key, "--api-url", api_url])
-        self._client_cm = self._portal.wrap_async_context_manager(Client(params, read_timeout_seconds=timeout))
-        self._client = self._client_cm.__enter__()
+        try:
+            self._client_cm = self._portal.wrap_async_context_manager(Client(params, read_timeout_seconds=timeout))
+            self._client = self._client_cm.__enter__()
+        except BaseException:
+            self._portal_cm.__exit__(None, None, None)
+            raise
 
     def list_tools(self) -> list[dict]:
         result = self._portal.call(self._client.list_tools)

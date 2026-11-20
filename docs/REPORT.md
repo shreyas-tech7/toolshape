@@ -16,11 +16,11 @@ Source: `results/tool_sizes.json`, 2026-11-20, read over mcp. Tokens are bytes /
 
 | Shape | Oracle passes [95% CI] | Wrong agents pass | Calls per task [95% CI] | Round-trip tokens per task [95% CI] | Seconds per task |
 |---|---|---|---|---|---:|
-| A: one tool per endpoint | 40/40 [91%, 100%] | 0/80 | 7.1 [3.1, 12.9] | 1,047 [572, 1,617] | 0.024 |
+| A: one tool per endpoint | 40/40 [91%, 100%] | 0/80 | 7.1 [3.1, 12.9] | 1,047 [572, 1,617] | 0.022 |
 | B: task-sized tools | 40/40 [91%, 100%] | 0/80 | 6.2 [2.5, 11.7] | 764 [338, 1,283] | 0.022 |
 | C: search_api + run_code | 40/40 [91%, 100%] | 0/80 | 2.0 [2.0, 2.0] | 1,603 [1,597, 1,608] | 0.084 |
 
-Source: `results/oracle.json`, 2026-11-20, seed 42, transport mcp, no model (scripted oracle). Pass intervals are Wilson. Mean intervals are a bootstrap over the 40 tasks (2,000 resamples, seed 7). Seconds depend on the machine in `docs/ENVIRONMENT.md`.
+Source: `results/oracle.json`, 2026-11-20, seed 42, transport mcp, no model (scripted oracle). Pass intervals are Wilson. The oracle is deterministic, so its intervals describe the spread over these 40 tasks, not run to run noise. Mean intervals are a bootstrap over the 40 tasks (2,000 resamples, seed 7). Seconds depend on the machine in `docs/ENVIRONMENT.md`.
 
 ## Cost per task through the agent loop
 
@@ -30,7 +30,7 @@ Source: `results/oracle.json`, 2026-11-20, seed 42, transport mcp, no model (scr
 | B: task-sized tools | 40/40 [91%, 100%] | 7.2 | 38,707 [6,301, 86,827] | 301 | 8,964 |
 | C: search_api + run_code | 40/40 [91%, 100%] | 3.0 | 3,765 [3,749, 3,780] | 1,279 | 897 |
 
-Source: `runs/scripted/state.json`, 2026-11-20, model `fake-oracle-replay` (local fake endpoint), transport inprocess. This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, so it shows the least an agent pays to make those calls. Token source: provider (bytes / 4).
+Source: `runs/scripted/state.json`, 2026-11-20, model `fake-oracle-replay` (local fake endpoint), transport inprocess. This is not a language model. A local fake endpoint replays the oracle's calls one per turn through the real agent loop, so it shows the least an agent pays to make those calls. Token counts come from the usage field of the local fake endpoint, which itself estimates bytes / 4.
 
 ## Paired differences against shape A
 
@@ -55,7 +55,7 @@ Computed from the oracle run and the scripted agent run. A real model adds wrong
 
 ## Real model run
 
-No run with a real model yet. This machine has no provider key and cannot reach api.groq.com or openrouter.ai (see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.
+No run with a real model yet. The build machine had no provider key and could not reach api.groq.com or openrouter.ai (see `BLOCKERS.md`). `docs/HUMAN_STEPS.md` gives the two commands that record one.
 
 ## Per task
 
