@@ -2,7 +2,7 @@
 
 One line for each choice: what I picked, what I weighed, and why.
 
-- 2026-11-20 Name: package and command are `toolcut`. Checked `toolshape`: PyPI 404 but npm 200 (an unrelated package that converts tool definitions between providers), so it is not free by the brief's rule. `toolcut`: PyPI 404, npm 404, and a web search found no well-known GitHub project. The repo stays `shreyas-tech7/toolshape`; renaming it is optional and listed in docs/HUMAN_STEPS.md.
+- 2026-11-20 Name: package and command are `toolcut`. Checked `toolshape`: PyPI 404 but npm 200 (an unrelated package that converts tool definitions between providers), so it is not free by the brief's rule. `toolcut`: PyPI 404, npm 404, and a web search found no well-known GitHub project. The repo stays `shreyas-tech7/toolshape`. Renaming it is optional and listed in docs/HUMAN_STEPS.md.
 - 2026-11-20 Branch: origin had no `main` and no commits, so `claude/build-toolshape` starts from a fresh first commit. I did not create `main`.
 - 2026-11-20 MCP SDK: pinned `mcp==2.3.0`, the newest release on PyPI on the build date. Version 2 renamed FastMCP, so the servers use the low-level `mcp.server.lowlevel.Server` with explicit `list_tools` and `call_tool` handlers. That keeps each shape's tool list exactly as written, with no schema generated from type hints.
 - 2026-11-20 One shape core, two transports: each shape is a plain Python object (`list_tools`, `call_tool`). The MCP server wraps it over stdio. Tests and quick runs use the object in process. The oracle report run goes through real MCP stdio servers. Options weighed: MCP only (slow tests), in-process only (no MCP practice). The capability matrix and the MCP test prove both paths match.

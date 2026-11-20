@@ -32,7 +32,7 @@ def bootstrap_mean(values: list[float], n: int = BOOT_N, seed: int = BOOT_SEED) 
     """Mean and a 95% percentile interval from resampling the values (here: tasks)."""
     if not values:
         return (float("nan"), float("nan"), float("nan"))
-    rng = random.Random(seed)
+    rng = random.Random(seed)  # noqa: S311 - seeded, for statistics or synthetic data
     m = len(values)
     means = [fmean(rng.choices(values, k=m)) for _ in range(n)]
     lo, hi = _percentiles(means)

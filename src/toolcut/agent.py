@@ -53,6 +53,8 @@ class HttpChat:
     """POST {base_url}/chat/completions. Retries 429 and 5xx with a doubling wait, at most 5 tries."""
 
     def __init__(self, base_url: str, model: str, key_env: str | None = None, timeout: float = 120.0, wait: float = 5.0):
+        if not base_url.startswith(("https://", "http://")):
+            raise ValueError("base_url must start with https:// or http://")
         self.base_url = base_url.rstrip("/")
         self.model = model
         self.key_env = key_env
@@ -70,11 +72,12 @@ class HttpChat:
         ctx = ssl.create_default_context(cafile=cafile) if cafile else ssl.create_default_context()
         wait = self.wait
         for attempt in range(5):
-            req = urllib.request.Request(self.base_url + "/chat/completions", data=data, headers=headers, method="POST")
+            req = urllib.request.Request(self.base_url + "/chat/completions", data=data, headers=headers, method="POST")  # noqa: S310 - scheme checked in __init__
             self.requests += 1
             try:
                 kw = {"context": ctx} if self.base_url.startswith("https") else {}
-                with urllib.request.urlopen(req, timeout=self.timeout, **kw) as resp:  # noqa: S310 - URL is the configured endpoint
+                resp_cm = urllib.request.urlopen(req, timeout=self.timeout, **kw)  # noqa: S310 - scheme checked in __init__
+                with resp_cm as resp:
                     return json.loads(resp.read())
             except urllib.error.HTTPError as e:
                 if e.code in (429, 500, 502, 503) and attempt < 4:
@@ -156,7 +159,7 @@ def run_agent(task: Task, session: Session, chat, model: str, max_turns: int = 2
             stats["prompt_tokens"] += int(usage["prompt_tokens"])
             stats["completion_tokens"] += int(usage["completion_tokens"])
         else:
-            stats["token_source"] = "estimate"
+            stats["token_source"] = "estimate"  # noqa: S105 - a label, not a secret
             stats["prompt_tokens"] += est_tokens(json.dumps(payload["messages"])) + tools_tokens
             stats["completion_tokens"] += est_tokens(json.dumps(msg))
         calls = msg.get("tool_calls") or []

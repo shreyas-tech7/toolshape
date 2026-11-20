@@ -180,8 +180,17 @@ def cmd_demo(a) -> int:
                 ep = run_episode(server, s, task, shape, "oracle")
                 print(f"shape {shape}: {'PASS' if ep.passed else 'FAIL'}, {ep.tool_calls} tool calls, {ep.api_calls} API requests, "
                       f"{ep.arg_bytes + ep.result_bytes} bytes through the tools")
+                groups: list[list] = []
                 for c in s.log:
-                    print(f"  {c.name}: {c.arg_bytes} B in, {c.result_bytes} B out")
+                    if groups and groups[-1][0] == c.name:
+                        groups[-1][1] += 1
+                        groups[-1][2] += c.arg_bytes
+                        groups[-1][3] += c.result_bytes
+                    else:
+                        groups.append([c.name, 1, c.arg_bytes, c.result_bytes])
+                for name, n, ab, rb in groups:
+                    times = f" x{n}" if n > 1 else ""
+                    print(f"  {name}{times}: {ab} B in, {rb} B out")
     return 0
 
 

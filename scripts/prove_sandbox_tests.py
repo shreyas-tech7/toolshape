@@ -17,7 +17,7 @@ sys.exit(pytest.main(["-q", "-p", "no:cacheprovider", "tests/test_sandbox.py", "
                       "raw_socket or files_outside or memory or subprocess"]))
 '''
 
-r = subprocess.run([sys.executable, "-c", CODE], capture_output=True, text=True, timeout=600)
+r = subprocess.run([sys.executable, "-c", CODE], capture_output=True, text=True, timeout=600)  # noqa: S603 - fixed argv, our own code
 print(r.stdout[-1500:])
 if r.returncode == 0:
     sys.exit("FAIL: the sandbox tests passed with the guards turned off")

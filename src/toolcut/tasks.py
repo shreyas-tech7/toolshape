@@ -136,19 +136,22 @@ def _comment_has(before: World, body: str) -> set[int]:
 
 def _top_commenter(before: World) -> int:
     (top, n), (_, m) = Counter(c["author_id"] for c in before["comments"].values()).most_common(2)
-    assert n > m, "seed must have a unique top commenter"
+    if n <= m:
+        raise RuntimeError("seed must have a unique top commenter")
     return top
 
 
 def _busiest_project(before: World) -> str:
     (top, n), (_, m) = Counter(t["project_id"] for t in before["tasks"].values() if t["status"] != "done").most_common(2)
-    assert n > m, "seed must have a unique busiest project"
+    if n <= m:
+        raise RuntimeError("seed must have a unique busiest project")
     return before["projects"][top]["name"]
 
 
 def _earliest_open(before: World) -> int:
     rows = sorted((t["due"], t["id"]) for t in before["tasks"].values() if t["due"] and t["status"] != "done")
-    assert rows[0][0] != rows[1][0], "seed must have a unique earliest due date"
+    if rows[0][0] == rows[1][0]:
+        raise RuntimeError("seed must have a unique earliest due date")
     return rows[0][1]
 
 

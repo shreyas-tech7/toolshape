@@ -52,7 +52,7 @@ COMMENTS = [
 
 
 def seed_data(seed: int = SEED) -> dict:
-    rng = random.Random(seed)
+    rng = random.Random(seed)  # noqa: S311 - seeded, for statistics or synthetic data
     users = {}
     for i, (name, role) in enumerate(USERS, start=1):
         first, last = name.lower().split()
