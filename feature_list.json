@@ -89,7 +89,7 @@
       ".venv/bin/python -m pytest -q tests/test_oracle.py",
       ".venv/bin/toolcut oracle --transport mcp --out results/oracle.json"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F11",
@@ -108,7 +108,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_agent_loop.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F13",
@@ -117,7 +117,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_record_run.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F14",
@@ -137,7 +137,7 @@
       ".venv/bin/python -m pytest -q tests/test_metrics.py tests/test_report.py",
       ".venv/bin/toolcut report"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F16",

@@ -1,0 +1,197 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "77d310020e76360f42c2557b9b1c8df8bd829e5a3bdfc87cfac4484f4d2f2ed2",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-133",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2401
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "7c1c0a454807a8ae0c80001976bfb138ece8dde4e467704fc6cfd3a7bb116dd3",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 71}",
+          "name": "get_task"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-134",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 40,
+     "prompt_tokens": 2736
+    }
+   },
+   "seconds": 0.0165
+  },
+  {
+   "request_sha": "03957dbe58e0245e3d957a615d43469e47adad4226645768fe1e97a8255def99",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 1}",
+          "name": "list_project_members"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-135",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 43,
+     "prompt_tokens": 2854
+    }
+   },
+   "seconds": 0.0237
+  },
+  {
+   "request_sha": "44aa174b418be08c02efe88d24ad7162bb168fe041e1ccdc81b0a20475df0dde",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 1, \"user_id\": 9}",
+          "name": "add_project_member"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-136",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 3056
+    }
+   },
+   "seconds": 0.0235
+  },
+  {
+   "request_sha": "b2552f423f2762884692fc912e8e53475361e263e5f0d2693c90c5f65e0ebde3",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 71, \"assignee_id\": 9}",
+          "name": "assign_task"
+         },
+         "id": "call_4",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-137",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3155
+    }
+   },
+   "seconds": 0.0233
+  },
+  {
+   "request_sha": "1611ee162f4ce784010ab6e41910d43f406b90385906a14059d32472b9c52200",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-138",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 3279
+    }
+   },
+   "seconds": 0.015
+  }
+ ],
+ "meta": {
+  "key": "t17|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

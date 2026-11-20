@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "49424d0192624debca50f54a4a333b9dbb7100eb6c6345886134c17eb4d580af",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-102",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2403
+    }
+   },
+   "seconds": 0.0237
+  },
+  {
+   "request_sha": "472083282166db6b279affbad615bcdee06f3cbc47cca0c7a3f90df01dbe3e91",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"user_id\": 5, \"role\": \"admin\"}",
+          "name": "update_user"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-103",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 2737
+    }
+   },
+   "seconds": 0.0225
+  },
+  {
+   "request_sha": "63aad837b59c4c626a65125e9887446177d48d1ab449e603ddbd9f61f866dfef",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-104",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2825
+    }
+   },
+   "seconds": 0.024
+  }
+ ],
+ "meta": {
+  "key": "t14|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "96b6d6714c3ec0e87c0e6ae0052058c17f2b98e5cb35120a10562bed8fe3a006",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"project\": \"Data Platform\"}",
+          "name": "projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-274",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 49,
+     "prompt_tokens": 1413
+    }
+   },
+   "seconds": 0.015
+  },
+  {
+   "request_sha": "a13e9035d33064936d68da77fc15466fb92dff7b532591a719e5e9e596585a59",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project\": 5, \"label\": \"urgent-fix\"}",
+          "name": "find_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-275",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1515
+    }
+   },
+   "seconds": 0.015
+  },
+  {
+   "request_sha": "013745a383e2a12cba9bf2abfbfcd97d7d40b6f1035a981fbfa2d0ebe2e70ce3",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [22, 38, 53, 69], \"priority\": \"urgent\"}",
+          "name": "update_tasks"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-276",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 51,
+     "prompt_tokens": 1944
+    }
+   },
+   "seconds": 0.0148
+  },
+  {
+   "request_sha": "014e350123bc06e8402ade1105d71c31e9f45f46b665dbbe9c6fb85a3d19e149",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-277",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2253
+    }
+   },
+   "seconds": 0.0149
+  }
+ ],
+ "meta": {
+  "key": "t28|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

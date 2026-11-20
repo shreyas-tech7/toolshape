@@ -40,13 +40,12 @@ def run_episode(server: TaskDeskServer, session: Session, task: Task, shape_key:
     start_log = len(session.log)
     error = None
     extra = {}
+    name = getattr(agent, "name", "model") if callable(agent) else agent
     t0 = time.perf_counter()
     try:
         if callable(agent):
             extra = agent(task, session) or {}
-            name = getattr(agent, "name", "model")
         else:
-            name = agent
             plan = plan_for(agent, task)
             if plan is not None:
                 run_plan(plan, shape_key, session)

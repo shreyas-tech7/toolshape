@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "65bf974d9b25e6b21592317d189203a49ebbcdbdbe2fde459cc4206f7cc2dd21",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"project\": \"Data Platform\"}",
+          "name": "projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-71",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 49,
+     "prompt_tokens": 1409
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "a6c40d8229883b9a10e5f292c05f4e906ccbe6b2435998b1fe2d7f1482e2550e",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project\": 5, \"title\": \"Write API changelog\", \"priority\": \"high\"}",
+          "name": "create_task"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-72",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 55,
+     "prompt_tokens": 1511
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "624e1634be97422b4f68f20060584b6b241de504f09d14cdde0c50adb3a160f8",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-73",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1631
+    }
+   },
+   "seconds": 0.0153
+  }
+ ],
+ "meta": {
+  "key": "t10|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

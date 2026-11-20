@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "970a82420ad7babebb9b60d08e1782340d2bd5580592dd428013d77fd1be64de",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Sam Okafor\"}",
+          "name": "users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-39",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1403
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "f95697bb8cb2bb1997f069940fd7da3ac021497e623e3cc029ef286599d4c6e7",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"add\", \"task_id\": 31, \"body\": \"Starting today.\", \"author\": 4}",
+          "name": "comments"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-40",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 57,
+     "prompt_tokens": 1492
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "15fd1c6b9843143214f24cbde5e6fb7e9105c41f3910635067bc7e15e99a89c7",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-41",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1588
+    }
+   },
+   "seconds": 0.0152
+  }
+ ],
+ "meta": {
+  "key": "t06|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

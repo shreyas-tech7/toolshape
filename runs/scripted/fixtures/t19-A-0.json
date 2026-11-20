@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "c07eff4eaf6efdd7e9f658cc7e969409b557583f1f592ad0aba6798aa3406106",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 1, \"query\": \"Plan Q2 roadmap\"}",
+          "name": "search_tasks"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-159",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 48,
+     "prompt_tokens": 2417
+    }
+   },
+   "seconds": 0.0153
+  },
+  {
+   "request_sha": "4faae5f66d456d0bd5aabce06e880e344bf76d8bcb4a4f305e3ab1f02ba4ea08",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 71, \"status\": \"in_progress\"}",
+          "name": "update_task"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-160",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 48,
+     "prompt_tokens": 2557
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "fc3883eec95b315a9f4981406287b79c3f559665f3b3eb9714dff64944b2ba2f",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-161",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2685
+    }
+   },
+   "seconds": 0.0152
+  }
+ ],
+ "meta": {
+  "key": "t19|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

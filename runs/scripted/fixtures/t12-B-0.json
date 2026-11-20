@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "f7dd70476615d398dd076dae359e73072165f555771e66be7afcf9128bfbabc1",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"project\": \"Ops\"}",
+          "name": "projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-87",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 1397
+    }
+   },
+   "seconds": 0.0237
+  },
+  {
+   "request_sha": "b5782a445bba2a046c12cece52d38c09bc950771a5154f5ab8204a8c41d0c0d0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"update\", \"project\": 4, \"name\": \"Operations\"}",
+          "name": "projects"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-88",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 52,
+     "prompt_tokens": 1493
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "6257c82357c45d9a0d2d5e9d967032cc01aa46aa95bdd5908eba64c8b2e0a209",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-89",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1597
+    }
+   },
+   "seconds": 0.015
+  }
+ ],
+ "meta": {
+  "key": "t12|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

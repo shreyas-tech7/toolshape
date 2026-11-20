@@ -1,0 +1,65 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "63bb99772c0aa87942ff67201247bff7df33a52378b1c3fe405d8f055284699b",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"name\": \"Ivy Chen\", \"email\": \"ivy.chen@taskdesk.test\", \"role\": \"member\"}",
+          "name": "create_user"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-77",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 58,
+     "prompt_tokens": 2417
+    }
+   },
+   "seconds": 0.0204
+  },
+  {
+   "request_sha": "b08bf1d64269bee1339905b6f28171d49e3ba29add894b8c330fb617de1161f0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-78",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2516
+    }
+   },
+   "seconds": 0.0188
+  }
+ ],
+ "meta": {
+  "key": "t11|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

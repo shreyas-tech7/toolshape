@@ -1,0 +1,296 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "4f82d1ce5e79891f855e1872863757d5ff6871b4bcdc62dceda8c1141c070ecf",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-281",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2410
+    }
+   },
+   "seconds": 0.0175
+  },
+  {
+   "request_sha": "bc2aad102491fd0d7501cbdc8696ff3ff609e4080a0e2608075b1c4253105fb8",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 1, \"project_id\": 2, \"status\": \"in_progress\"}",
+          "name": "list_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-282",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 51,
+     "prompt_tokens": 2693
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "dcd384fbf3b4ec90a5573f378319141a1f59e6389daaa57f15ea82c0d09eb561",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 12, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-283",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3189
+    }
+   },
+   "seconds": 0.0153
+  },
+  {
+   "request_sha": "5117522f71ab7c7ac27426eadfad7197b45ca87301aefbf10e8c49a8bab38770",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 18, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-284",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3312
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "5652c61a65fe76c5133ade4e5e48fc25788b1fafa238e0431bb37eb2007a4ef7",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 30, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_4",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-285",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3447
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "bd6ca9f81f010c4c40dfebfd984c691d8b721e69c3ba925b8d0a5db04a7edda5",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 42, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_5",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-286",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3572
+    }
+   },
+   "seconds": 0.0149
+  },
+  {
+   "request_sha": "407dbbfd629b0ded563755b1da64c70e77f944480953b375ce9885d8943bac62",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 57, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_6",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-287",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3705
+    }
+   },
+   "seconds": 0.015
+  },
+  {
+   "request_sha": "5044d719f687d7fb74da71617dfbfa326bf167751d5522d72382115200ee0b4b",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 68, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_7",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-288",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3834
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "eed5885064ba3f8f0566764764716a3c2795448e82604ccfcf54896c0a719b5a",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-289",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 3960
+    }
+   },
+   "seconds": 0.0154
+  }
+ ],
+ "meta": {
+  "key": "t29|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

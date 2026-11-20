@@ -1,0 +1,24 @@
+{
+ "meta": {
+  "date": "2026-11-20",
+  "measure": "compact JSON of name, description and inputSchema",
+  "transport": "mcp"
+ },
+ "shapes": {
+  "A": {
+   "bytes": 8265,
+   "est_tokens": 2067,
+   "tools": 25
+  },
+  "B": {
+   "bytes": 4739,
+   "est_tokens": 1185,
+   "tools": 8
+  },
+  "C": {
+   "bytes": 1136,
+   "est_tokens": 284,
+   "tools": 2
+  }
+ }
+}

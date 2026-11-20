@@ -17,3 +17,12 @@ One line for each choice: what I picked, what I weighed, and why.
 - 2026-11-20 Sandbox AST rule also forbids any attribute or name that starts with `_`, plus `getattr`, `setattr`, `delattr`, `globals`, `locals`, `vars`, `__import__`, `open` stays allowed so the audit hook test can show it is limited to the temp dir.
 - 2026-11-20 Third-party skills (ponytail, caveman, humanizer, security-audit, find-skills): `npx skills add` was denied by the permission system. Not retried. Ponytail and humanizer rules are applied by hand, and the release check uses the skills already present (superpowers, security-review, simplify).
 - 2026-11-20 Assumption for the plan: the brief is the spec, so no question rounds. Each assumption is in docs/PLAN.md and here.
+
+## 16. Scripted agent run stands in for a model run
+The model hosts are blocked and there is no key, so no real model can run here. A local fake endpoint replays the oracle's calls one per turn through the real agent loop. That gives a lower bound on what an agent pays in tokens per shape, and it exercises record mode, fixtures and replay end to end. The README and report say plainly that it is not a model.
+
+## 17. Scripted run allows 100 turns
+Two lookup tasks need about 80 calls in shapes A and B when made one per turn. At 40 turns those episodes stopped early and failed, which measured the turn cap and not the shape. The scripted run uses 100 turns. Real record runs default to 20 turns, and the README notes that a real model can batch calls in one turn.
+
+## 18. Token counts are bytes / 4
+The prompt asks for provider usage when it exists. The agent reads `usage` when present and marks the episode `provider`, otherwise it estimates bytes / 4 and marks it `estimate`. The fake endpoint fills `usage` with the same estimate, so the scripted numbers are estimates either way, and the report says so.

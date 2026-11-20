@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "d90e8a57bc92889d61360b6508ef2ab6d2b3764c9770da4cb66831aa366d72d7",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"query\": \"*\"}",
+          "name": "search_api"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-294",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 41,
+     "prompt_tokens": 455
+    }
+   },
+   "seconds": 0.0199
+  },
+  {
+   "request_sha": "5e7fc7f3f8fb35c9c12293b76501401ecba27f4ec8d10b66d95a81a73c84251e",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"code\": \"TODAY = \\\"2026-03-15\\\"\\n\\n\\nclass H:\\n    @staticmethod\\n    def pages(method, **kw):\\n        rows = []\\n        page = 1\\n        while page:\\n            r = method(page=page, **kw)\\n            rows = rows + r[\\\"items\\\"]\\n            page = r[\\\"next_page\\\"]\\n        return rows\\n\\n    @staticmethod\\n    def user(name):\\n        return [u for u in taskdesk.list_users()[\\\"items\\\"] if u[\\\"name\\\"] == name][0]\\n\\n    @staticmethod\\n    def users():\\n        return taskdesk.list_users()[\\\"items\\\"]\\n\\n    @staticmethod\\n    def project(name):\\n        return [p for p in taskdesk.list_projects()[\\\"items\\\"] if p[\\\"name\\\"] == name][0]\\n\\n    @staticmethod\\n    def projects():\\n        return taskdesk.list_projects()[\\\"items\\\"]\\n\\n    @staticmethod\\n    def tasks(**filters):\\n        return H.pages(taskdesk.list_tasks, **filters)\\n\\n    @staticmethod\\n    def overdue(**filters):\\n        return [t for t in H.tasks(due_before=TODAY, **filters) if t[\\\"status\\\"] != \\\"done\\\"]\\n\\n    @staticmethod\\n    def search(text):\\n        return H.pages(taskdesk.search_tasks, query=text)\\n\\n    @staticmethod\\n    def task(task_id):\\n        return taskdesk.get_task(task_id=task_id)\\n\\n    @staticmethod\\n    def comments(task_id):\\n        return taskdesk.list_comments(task_id=task_id)[\\\"items\\\"]\\n\\n    @staticmethod\\n    def all_comments():\\n        out = []\\n        for t in H.tasks():\\n            out = out + H.comments(t[\\\"id\\\"])\\n        return out\\n\\n    @staticmethod\\n    def members(project_id):\\n        return [u[\\\"id\\\"] for u in taskdesk.list_project_members(project_id=project_id)[\\\"items\\\"]]\\n\\n    @staticmethod\\n    def update(task_id, **fields):\\n        return taskdesk.update_task(task_id=task_id, **fields)\\n\\n    @staticmethod\\n    def assign(task_id, user_id):\\n        return taskdesk.assign_task(task_id=task_id, assignee_id=user_id)\\n\\n    @staticmethod\\n    def label(task_id, label):\\n        return taskdesk.add_label(task_id=task_id, label=label)\\n\\n    @staticmethod\\n    def unlabel(task_id, label):\\n        return taskdesk.remove_label(task_id=task_id, label=label)\\n\\n    @staticmethod\\n    def update_many(task_ids, assignee=-1, add_label=None, remove_label=None, **fields):\\n        for tid in task_ids:\\n            if fields:\\n                taskdesk.update_task(task_id=tid, **fields)\\n            if assignee != -1:\\n                taskdesk.assign_task(task_id=tid, assignee_id=assignee)\\n            if add_label:\\n                taskdesk.add_label(task_id=tid, label=add_label)\\n            if remove_label:\\n                taskdesk.remove_label(task_id=tid, label=remove_label)\\n\\n    @staticmethod\\n    def comment(task_id, body, author_id):\\n        return taskdesk.add_comment(task_id=task_id, body=body, author_id=author_id)\\n\\n    @staticmethod\\n    def edit_comment(comment_id, body):\\n        return taskdesk.update_comment(comment_id=comment_id, body=body)\\n\\n    @staticmethod\\n    def delete_comment(comment_id):\\n        return taskdesk.delete_comment(comment_id=comment_id)\\n\\n    @staticmethod\\n    def delete_task(task_id):\\n        return taskdesk.delete_task(task_id=task_id)\\n\\n    @staticmethod\\n    def create_task(project_id, title, labels=(), **fields):\\n        t = taskdesk.create_task(project_id=project_id, title=title, **fields)\\n        for label in labels:\\n            t = taskdesk.add_label(task_id=t[\\\"id\\\"], label=label)\\n        return t\\n\\n    @staticmethod\\n    def add_member(project_id, user_id):\\n        return taskdesk.add_project_member(project_id=project_id, user_id=user_id)\\n\\n    @staticmethod\\n    def create_project(name, owner_id, **fields):\\n        return taskdesk.create_project(name=name, owner_id=owner_id, **fields)\\n\\n    @staticmethod\\n    def update_project(project_id, **fields):\\n        return taskdesk.update_project(project_id=project_id, **fields)\\n\\n    @staticmethod\\n    def archive(project_id):\\n        return taskdesk.archive_project(project_id=project_id)\\n\\n    @staticmethod\\n    def create_user(name, email, **fields):\\n        return taskdesk.create_user(name=name, email=email, **fields)\\n\\n    @staticmethod\\n    def update_user(user_id, **fields):\\n        return taskdesk.update_user(user_id=user_id, **fields)\\n\\n    @staticmethod\\n    def deactivate(user_id):\\n        return taskdesk.deactivate_user(user_id=user_id)\\n\\n\\ndef t29(h):\\n    tasks = h.tasks(project_id=h.project(\\\"Mobile App\\\")[\\\"id\\\"], status=\\\"in_progress\\\")\\n    h.update_many([t[\\\"id\\\"] for t in tasks], status=\\\"done\\\")\\n\\n\\nt29(H)\\nprint(\\\"done\\\")\\n\"}",
+          "name": "run_code"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-295",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 1236,
+     "prompt_tokens": 1027
+    }
+   },
+   "seconds": 0.0166
+  },
+  {
+   "request_sha": "ab7ac0f1291bedd45f7c523a3ddbaae6bd7fc82d94d23b7589145273235864df",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-296",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2279
+    }
+   },
+   "seconds": 0.0165
+  }
+ ],
+ "meta": {
+  "key": "t29|C|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

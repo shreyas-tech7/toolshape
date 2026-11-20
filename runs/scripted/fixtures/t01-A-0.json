@@ -1,0 +1,65 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "9ed9e3f4d12bfda76f3711656518c228eed5d9cf562d94086cc378e03c4d1b4e",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 13, \"status\": \"done\"}",
+          "name": "update_task"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-1",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 2400
+    }
+   },
+   "seconds": 0.0305
+  },
+  {
+   "request_sha": "ea27651b7deda038b9ea2c36d0e6e810de4e41d6fc542ac9d4c3276bf3412514",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-2",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2530
+    }
+   },
+   "seconds": 0.0167
+  }
+ ],
+ "meta": {
+  "key": "t01|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

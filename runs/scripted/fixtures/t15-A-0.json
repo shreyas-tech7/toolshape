@@ -1,0 +1,131 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "6b334d09bae01df9da2b459338dd6524845162dc632256e4249d57333a15409f",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-111",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2407
+    }
+   },
+   "seconds": 0.0229
+  },
+  {
+   "request_sha": "001a90fd472db023857c816e7f73c89c096d51945c9ba16cdf3485039b0e4171",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-112",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2690
+    }
+   },
+   "seconds": 0.0197
+  },
+  {
+   "request_sha": "5ec9ca3afdb2eea296f314a9dee3277f2ab7e53b93ee05628b0abe5132aa9dde",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 2, \"user_id\": 9}",
+          "name": "add_project_member"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-113",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 3024
+    }
+   },
+   "seconds": 0.0182
+  },
+  {
+   "request_sha": "dadd7f57025d5327cdbc89e869c350bc08a2b8119f21ec0c007a74dd70b8c7fa",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-114",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 3121
+    }
+   },
+   "seconds": 0.0196
+  }
+ ],
+ "meta": {
+  "key": "t15|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}
