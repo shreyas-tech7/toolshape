@@ -5,7 +5,7 @@
 - F14 is blocked with a fallback: the scripted run in `runs/scripted/` drives the real agent loop against a local fake endpoint. BLOCKERS.md and docs/HUMAN_STEPS.md step 6 cover the real run.
 
 - F21: the release check is in docs/RELEASE_CHECK.md, with every code review and outside check finding and what was done.
-- F22: the hand-off files are in place. The release commit says "this commit", and the next commit records its full SHA in CHANGELOG.md, docs/HUMAN_STEPS.md and HANDOVER.md.
+- F22: the hand-off files are in place. The release commit is 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5. The commit after it records that SHA in CHANGELOG.md, docs/HUMAN_STEPS.md and HANDOVER.md and changes only hand-off files.
 
 ## Next
 - Shreyas: the steps in docs/HUMAN_STEPS.md (pull request, tag, a real model run, making the repo public).

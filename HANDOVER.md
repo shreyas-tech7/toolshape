@@ -10,4 +10,4 @@ For a fresh session that picks this up.
 - After any change to results: `toolcut report`, `toolcut readme`, `scripts/make_site.py`, `scripts/make_social_preview.py`, `scripts/make_demo.sh`.
 - At the end: bundle to /mnt/project-files/portfolio/bundles/toolshape.bundle, report to /mnt/project-files/portfolio/reports/toolshape.md, and set row 8 of /mnt/project-files/portfolio/QUEUE.md.
 
-Release commit: this commit.
+Release commit: 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5.

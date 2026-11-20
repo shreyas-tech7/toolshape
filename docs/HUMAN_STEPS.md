@@ -2,7 +2,7 @@
 
 Steps that only Shreyas can do, in order. While Shreyas was away, Claude was allowed to open and merge the pull request, create the pre-release and set the About box and topics. Check each of those on GitHub before you redo it.
 
-Release commit: this commit.
+Release commit: 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5.
 
 The commits after the release commit only record this SHA and the hand-off notes. Tag the release commit.
 
@@ -31,7 +31,7 @@ Open the Actions tab. The `CI` workflow should finish green on `claude/build-too
 
 ```bash
 git fetch origin
-git tag -a v0.1.0-rc1 RELEASE_SHA -m "Release candidate 1"
+git tag -a v0.1.0-rc1 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5 -m "Release candidate 1"
 git push origin v0.1.0-rc1
 ```
 

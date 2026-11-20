@@ -2,7 +2,7 @@
 
 ## v0.1.0-rc1 (2026-11-20)
 
-Release commit: this commit.
+Release commit: 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5.
 
 First release candidate.
 
