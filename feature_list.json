@@ -1,0 +1,212 @@
+[
+  {
+    "id": "F01",
+    "area": "setup",
+    "description": "init.sh builds .venv and runs every test offline. A conftest guard fails any test that opens a non-local connection, and one test proves the guard.",
+    "steps": [
+      "./init.sh",
+      ".venv/bin/python -m pytest -q tests/test_network_guard.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F02",
+    "area": "fakeapi",
+    "description": "TaskDesk fake API: about 25 endpoints over projects, tasks, comments and users, seeded data, standard library only.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_fakeapi.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F03",
+    "area": "tasks",
+    "description": "40 scripted tasks with checkable end states and a scorer that reads the fake API database at the end of a run.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_tasks.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F04",
+    "area": "shapes",
+    "description": "Shape A: one tool per endpoint.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_a"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F05",
+    "area": "shapes",
+    "description": "Shape B: fewer task-sized tools.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_b"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F06",
+    "area": "shapes",
+    "description": "Shape C: search_api to find operations and run_code to run a short script against a typed client.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_c"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F07",
+    "area": "sandbox",
+    "description": "run_code sandbox: child process with CPU, memory and wall-clock limits, an AST allowlist and an audit hook. Tests show no network except the fake API, no file reads outside the temp dir, and a stop at the time limit.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_sandbox.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F08",
+    "area": "shapes",
+    "description": "Capability matrix test: every one of the API operations is reachable through all three shapes with the same effect on the database.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_capability_matrix.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F09",
+    "area": "mcp",
+    "description": "Each shape runs as a real MCP server over stdio with the official MCP Python SDK, and its tool list matches the in-process shape.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_mcp_servers.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F10",
+    "area": "oracle",
+    "description": "The oracle agent solves all 40 tasks in all three shapes, and the wrong agents fail all of them.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_oracle.py",
+      ".venv/bin/toolcut oracle --transport mcp --out results/oracle.json"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F11",
+    "area": "sizes",
+    "description": "Tool definition sizes for each shape, counted from the MCP tool lists before any model runs, written to results/tool_sizes.json and the README.",
+    "steps": [
+      ".venv/bin/toolcut sizes --out results/tool_sizes.json",
+      ".venv/bin/toolcut readme --check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F12",
+    "area": "agent",
+    "description": "Minimal tool-calling agent loop for any OpenAI-compatible endpoint, with record mode and fixture replay. Tool output goes back as data.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_agent_loop.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F13",
+    "area": "record",
+    "description": "Resumable record run: a state machine over (task, shape, repetition) with pending, done and failed states. A test stops a run and resumes it.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_record_run.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F14",
+    "area": "record",
+    "description": "At least one record-mode run with one free model covers 40 tasks in all three shapes, and the README states the model, date, repetitions and intervals.",
+    "steps": [
+      ".venv/bin/toolcut record --model <free model> --reps 1",
+      ".venv/bin/toolcut readme --check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F15",
+    "area": "report",
+    "description": "Metrics and report: success with intervals, calls per task, definition tokens, round-trip tokens, latency, paired differences between shapes, per-task breakdown and a when-each-shape-wins guide.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_metrics.py tests/test_report.py",
+      ".venv/bin/toolcut report"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F16",
+    "area": "docs",
+    "description": "docs/ADDING_A_SHAPE.md explains how to add your own server shape, and a test runs the example shape from the guide.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_shape_guide.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F17",
+    "area": "readme",
+    "description": "README has the Part 1 parts in order, generated tables, CI badge and a test that fails when a README number does not match its results file.",
+    "steps": [
+      ".venv/bin/toolcut readme --check",
+      ".venv/bin/python -m pytest -q tests/test_readme_sync.py tests/test_repo_quality.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F18",
+    "area": "repo",
+    "description": "CI workflow (passes actionlint), issue templates, CONTRIBUTING, CHANGELOG, topics, social preview made by a script, static results page, docs/DEMO.md transcript, scripts/check_links.py.",
+    "steps": [
+      "~/go/bin/actionlint",
+      ".venv/bin/python scripts/check_links.py",
+      ".venv/bin/python scripts/make_site.py --check",
+      ".venv/bin/python scripts/make_social_preview.py --check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F19",
+    "area": "study",
+    "description": "Study-later kit: docs/WALKTHROUGH.md, docs/INTERVIEW_QA.md with the interview points, DECISIONS.md.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_repo_quality.py -k study"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F20",
+    "area": "security",
+    "description": "MCP scanner run on each shape's exported tool list, results in docs/SECURITY_CHECKS.md.",
+    "steps": [
+      ".venv/bin/toolcut export-tools --out out/tools",
+      "mcp-scanner --analyzers yara static --tools out/tools/shape_a.json"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F21",
+    "area": "release",
+    "description": "Release check (section 11) done and logged in docs/RELEASE_CHECK.md.",
+    "steps": [
+      "~/go/bin/gitleaks git -v .",
+      "pip-audit",
+      ".venv/bin/python -m ruff check --select S src"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F22",
+    "area": "handoff",
+    "description": "Hand-off: CHANGELOG v0.1.0-rc1 with the release SHA, docs/HUMAN_STEPS.md, docs/handoff/COWORK_PROMPT.md, docs/GITHUB_ABOUT.md, docs/topics.txt.",
+    "steps": [
+      ".venv/bin/python -m pytest -q tests/test_repo_quality.py -k handoff"
+    ],
+    "passes": false
+  }
+]

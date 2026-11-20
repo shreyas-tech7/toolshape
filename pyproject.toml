@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "toolcut"
+version = "0.1.0rc1"
+description = "Hold an API fixed, change only the shape of its MCP tools, and measure what that does to an agent's success, tokens and speed."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Shreyas" }]
+requires-python = ">=3.11"
+dependencies = ["mcp==2.3.0"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Development Status :: 3 - Alpha",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+toolcut = "toolcut.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["tests"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
