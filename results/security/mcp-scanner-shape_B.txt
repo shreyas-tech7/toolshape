@@ -1,0 +1,17 @@
+=== MCP Scanner Results Summary ===
+
+Scan Target: https://mcp.deepwiki.com/mcp
+Total tools scanned: 8
+Items matching filters: 8
+Safe items: 8
+Unsafe items: 0
+
+=== Safe Items ===
+1. find_tasks (tool) - SAFE (0 findings)
+2. get_task_details (tool) - SAFE (0 findings)
+3. create_task (tool) - SAFE (0 findings)
+4. update_tasks (tool) - SAFE (0 findings)
+5. delete_tasks (tool) - SAFE (0 findings)
+6. comments (tool) - SAFE (0 findings)
+7. projects (tool) - SAFE (0 findings)
+8. users (tool) - SAFE (0 findings)

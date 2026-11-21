@@ -1,0 +1,65 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "92bbf00d05fc789868d12a10cac0c40a4fddc3556e3b99b1ac8470dd7caba539",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 37, \"label\": \"design\"}",
+          "name": "remove_label"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-29",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 2405
+    }
+   },
+   "seconds": 0.0197
+  },
+  {
+   "request_sha": "0abe5b85b366c2fb3196124a09e1d588e0156239aa194f704ecbb2fc6025d427",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-30",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2530
+    }
+   },
+   "seconds": 0.016
+  }
+ ],
+ "meta": {
+  "key": "t05|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "d6089588928b4fbee0cdfbcdc0431ba80baf9dd17f4d7d6162fb8d369737be7e",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Tom Becker\"}",
+          "name": "users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-96",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1393
+    }
+   },
+   "seconds": 0.0167
+  },
+  {
+   "request_sha": "68476516fea8ecaa5722d408b3e3078fe71aac9f97e359d596a85b8c9c7f34c9",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"deactivate\", \"user\": 8}",
+          "name": "users"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-97",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 45,
+     "prompt_tokens": 1482
+    }
+   },
+   "seconds": 0.0176
+  },
+  {
+   "request_sha": "7937f50b4bffa0907cbddb5ad22bc11344268de2ed03b5ba38e926c360bde672",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-98",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1569
+    }
+   },
+   "seconds": 0.0157
+  }
+ ],
+ "meta": {
+  "key": "t13|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

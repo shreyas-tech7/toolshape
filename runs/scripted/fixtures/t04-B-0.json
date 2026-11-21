@@ -1,0 +1,65 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "8d190cbe4edac16d9f6dbabe074af9ce3a16c566d0dd782da4e507cc74b579f2",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [24], \"add_labels\": [\"security\"]}",
+          "name": "update_tasks"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-24",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 50,
+     "prompt_tokens": 1395
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "9fb21f4ea41c1b35402867312a5b45d9819d2863c9893e6bedbfc9c376ffa06f",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-25",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1524
+    }
+   },
+   "seconds": 0.0151
+  }
+ ],
+ "meta": {
+  "key": "t04|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

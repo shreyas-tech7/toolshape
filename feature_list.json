@@ -7,7 +7,7 @@
       "./init.sh",
       ".venv/bin/python -m pytest -q tests/test_network_guard.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F02",
@@ -16,7 +16,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_fakeapi.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F03",
@@ -25,7 +25,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_tasks.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F04",
@@ -34,7 +34,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_a"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F05",
@@ -43,7 +43,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_b"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F06",
@@ -52,7 +52,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_shapes.py -k shape_c"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F07",
@@ -61,7 +61,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_sandbox.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F08",
@@ -70,7 +70,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_capability_matrix.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F09",
@@ -79,7 +79,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_mcp_servers.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F10",
@@ -89,7 +89,7 @@
       ".venv/bin/python -m pytest -q tests/test_oracle.py",
       ".venv/bin/toolcut oracle --transport mcp --out results/oracle.json"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F11",
@@ -99,7 +99,7 @@
       ".venv/bin/toolcut sizes --out results/tool_sizes.json",
       ".venv/bin/toolcut readme --check"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F12",
@@ -108,7 +108,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_agent_loop.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F13",
@@ -117,7 +117,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_record_run.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F14",
@@ -137,7 +137,7 @@
       ".venv/bin/python -m pytest -q tests/test_metrics.py tests/test_report.py",
       ".venv/bin/toolcut report"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F16",
@@ -146,7 +146,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_shape_guide.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F17",
@@ -156,7 +156,7 @@
       ".venv/bin/toolcut readme --check",
       ".venv/bin/python -m pytest -q tests/test_readme_sync.py tests/test_repo_quality.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F18",
@@ -168,7 +168,7 @@
       ".venv/bin/python scripts/make_site.py --check",
       ".venv/bin/python scripts/make_social_preview.py --check"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F19",
@@ -177,7 +177,7 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_repo_quality.py -k study"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F20",
@@ -187,7 +187,7 @@
       ".venv/bin/toolcut export-tools --out out/tools",
       "mcp-scanner --analyzers yara static --tools out/tools/shape_a.json"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F21",
@@ -198,7 +198,7 @@
       "pip-audit",
       ".venv/bin/python -m ruff check --select S src"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F22",
@@ -207,6 +207,6 @@
     "steps": [
       ".venv/bin/python -m pytest -q tests/test_repo_quality.py -k handoff"
     ],
-    "passes": false
+    "passes": true
   }
 ]

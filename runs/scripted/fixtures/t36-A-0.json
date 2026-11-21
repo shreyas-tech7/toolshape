@@ -1,0 +1,197 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "b88b1cf7bf06d3789e2dcfd180c8880cc3d1c2c841fce035e1ea49a8b9b68aad",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 1}",
+          "name": "list_tasks"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-525",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 39,
+     "prompt_tokens": 2414
+    }
+   },
+   "seconds": 0.0243
+  },
+  {
+   "request_sha": "a938b3c902143df766d680734abb6667fc610458adcbb9d2fa37b3721af0e479",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 2}",
+          "name": "list_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-526",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 39,
+     "prompt_tokens": 3841
+    }
+   },
+   "seconds": 0.0212
+  },
+  {
+   "request_sha": "d1a433f56acbe0a19ff331f1e72251b3795205989aeae88a926ff85b717eb7ec",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 3}",
+          "name": "list_tasks"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-527",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 39,
+     "prompt_tokens": 5266
+    }
+   },
+   "seconds": 0.0245
+  },
+  {
+   "request_sha": "bbee5c97cac58819fdee567ad06c77f18b457d51587f611d5568fc06f101e92d",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 4}",
+          "name": "list_tasks"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-528",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 39,
+     "prompt_tokens": 6717
+    }
+   },
+   "seconds": 0.0246
+  },
+  {
+   "request_sha": "c1a65ca9ac9122777cfd0c617b6a40d3cb4f55aa4d796a716b411df3c2be1d67",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 19, \"priority\": \"urgent\"}",
+          "name": "update_task"
+         },
+         "id": "call_4",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-529",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 7613
+    }
+   },
+   "seconds": 0.0236
+  },
+  {
+   "request_sha": "88ea3bb91434b6a056478734acd1a6b67cea57ee91db7c6dead7b4cc9f215c93",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-530",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 7746
+    }
+   },
+   "seconds": 0.0221
+  }
+ ],
+ "meta": {
+  "key": "t36|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

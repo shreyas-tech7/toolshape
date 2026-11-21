@@ -1,0 +1,197 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "04eb6d796e934bbe8804078837804f38ed67bafe5f2ae98a67ea31318d70af40",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"project\": \"Website Relaunch\"}",
+          "name": "projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-318",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 50,
+     "prompt_tokens": 1408
+    }
+   },
+   "seconds": 0.0156
+  },
+  {
+   "request_sha": "f84dd92e401e0dbbf4feb82c3e19da3e273d3f544ce006736f959a8b58df42dc",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Marco Bellini\"}",
+          "name": "users"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-319",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1510
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "498abb0a6004f4fadc33d2a99f4fedf78fd36fa0453f0cbf01eb47c9a2279829",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project\": 1, \"assignee\": 2}",
+          "name": "find_tasks"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-320",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 44,
+     "prompt_tokens": 1601
+    }
+   },
+   "seconds": 0.018
+  },
+  {
+   "request_sha": "7435c37429d51b4b913b1faf57d2518451b07410024bc33c4820a413081670a2",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Aiko Tanaka\"}",
+          "name": "users"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-321",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1779
+    }
+   },
+   "seconds": 0.0176
+  },
+  {
+   "request_sha": "92c21c0c446888bc16a31337fb043b6c2a8cfa74c8b30f2928b905e80c4ac92e",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [4, 71], \"assignee\": 3}",
+          "name": "update_tasks"
+         },
+         "id": "call_4",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-322",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1869
+    }
+   },
+   "seconds": 0.0192
+  },
+  {
+   "request_sha": "77c5657764663686d138a5da8218f8807fd530bb3caa3ea8019f180bc1c2c526",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-323",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2046
+    }
+   },
+   "seconds": 0.0186
+  }
+ ],
+ "meta": {
+  "key": "t31|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

@@ -1,0 +1,197 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "130fe40e5212500b4d7fcff746c019c5d57d63e2d0b47571fe4217e40209ae47",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-203",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2439
+    }
+   },
+   "seconds": 0.0237
+  },
+  {
+   "request_sha": "5804f28b516803d2902fae02524b83448d974d8abf1900452fd1636312a62086",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-204",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2722
+    }
+   },
+   "seconds": 0.016
+  },
+  {
+   "request_sha": "85529eb61cced033a282a5b57c2c0b8aee8a558c008ce7e59f20d233325fbbc4",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 1, \"title\": \"Fix flaky login test\", \"assignee_id\": 7, \"due\": \"2026-03-20\"}",
+          "name": "create_task"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-205",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 62,
+     "prompt_tokens": 3056
+    }
+   },
+   "seconds": 0.0161
+  },
+  {
+   "request_sha": "9ecdd98c5de957ae28cfdf1aec0fceeb719209a0c593de61337c587cbbf6cdc0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 73, \"label\": \"bug\"}",
+          "name": "add_label"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-206",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 45,
+     "prompt_tokens": 3194
+    }
+   },
+   "seconds": 0.0169
+  },
+  {
+   "request_sha": "cdd93cf2d06028c237446c665a810f8aa7e19548539797aa279588d363dd2146",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 73, \"label\": \"frontend\"}",
+          "name": "add_label"
+         },
+         "id": "call_4",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-207",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3316
+    }
+   },
+   "seconds": 0.0154
+  },
+  {
+   "request_sha": "88efcf251b5a587cdcc6b8763deed95d61306f0b60d4e6b85b643a74ef03847a",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-208",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 3443
+    }
+   },
+   "seconds": 0.0156
+  }
+ ],
+ "meta": {
+  "key": "t23|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

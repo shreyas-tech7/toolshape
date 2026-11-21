@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "3c5036e8d4ad4cfcb863b702ded52445a68f51084b80de38faaba15f75cd0623",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "find_tasks"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-531",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 1405
+    }
+   },
+   "seconds": 0.0157
+  },
+  {
+   "request_sha": "9f91f24fde36bbc451649c1abe96db414be4be388077c1399cf514b10fbd44ad",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [19], \"priority\": \"urgent\"}",
+          "name": "update_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-532",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 48,
+     "prompt_tokens": 5647
+    }
+   },
+   "seconds": 0.016
+  },
+  {
+   "request_sha": "04eceef8212da830881f13f89006e8a9600ae0d8dd31ce563f8facdb88d2e1e5",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-533",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 5772
+    }
+   },
+   "seconds": 0.0162
+  }
+ ],
+ "meta": {
+  "key": "t36|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

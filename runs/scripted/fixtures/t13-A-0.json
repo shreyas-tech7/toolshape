@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "0d758fad37df0dc58f1bdb33f35a5e199518219f1dbe64de9bdb7e05db40ebe2",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-93",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2402
+    }
+   },
+   "seconds": 0.016
+  },
+  {
+   "request_sha": "a3b0718c2ce1fa57ef75f75260f91ccb210826e98a4a58d22daa57030a3d43ed",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"user_id\": 8}",
+          "name": "deactivate_user"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-94",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 41,
+     "prompt_tokens": 2736
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "2b94bb4d19786e63c3f7f5e45f879aa7d9c18b2349439de410b17b3b7fd789d0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-95",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2820
+    }
+   },
+   "seconds": 0.0178
+  }
+ ],
+ "meta": {
+  "key": "t13|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

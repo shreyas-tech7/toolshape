@@ -1,0 +1,131 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "171c8caaaaedd559a35f80337770c1770ff87ca922f4aff76b90ce953d883fe4",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-148",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2429
+    }
+   },
+   "seconds": 0.0176
+  },
+  {
+   "request_sha": "1117951baafc21d43e299df869bc4224e313dd8ec361f98d105618f11eff6de7",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"name\": \"Security Review\", \"owner_id\": 4}",
+          "name": "create_project"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-149",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 49,
+     "prompt_tokens": 2763
+    }
+   },
+   "seconds": 0.017
+  },
+  {
+   "request_sha": "674459b5146d83f8d205a247eba4957e50f957638edffbc1ef5ae98cda621620",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 7, \"title\": \"Threat model\", \"assignee_id\": 4}",
+          "name": "create_task"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-150",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 53,
+     "prompt_tokens": 2855
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "3fa50ad2b3b68ac6628cbd9137ef0ec8b343b61b69bc4a6fba3cb0f2e3715141",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-151",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2980
+    }
+   },
+   "seconds": 0.0152
+  }
+ ],
+ "meta": {
+  "key": "t18|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

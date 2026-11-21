@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "19b31f2e7c26c8b871c6d694639171cb590251a533771056094ee8bede9d046c",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Aiko Tanaka\"}",
+          "name": "users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-62",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1393
+    }
+   },
+   "seconds": 0.015
+  },
+  {
+   "request_sha": "d3d666399ad97de573074e87c69a6360d1916164b0ee607bcb411155c9c7231c",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [19], \"assignee\": 3}",
+          "name": "update_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-63",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 1482
+    }
+   },
+   "seconds": 0.0149
+  },
+  {
+   "request_sha": "e0c84da9ddc1b28de3a5f457a5b0e43cf0a846c0d5ead9e9ba3072a27ba9f837",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-64",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1607
+    }
+   },
+   "seconds": 0.0153
+  }
+ ],
+ "meta": {
+  "key": "t09|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

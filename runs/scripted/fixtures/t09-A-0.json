@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "587d70ece0393a62a40c29c98939f679d2fc54c57c673ec2ed2db51ab77b3fc1",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-59",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2402
+    }
+   },
+   "seconds": 0.0227
+  },
+  {
+   "request_sha": "5f5122a08f73e818d181cc329fbed95ed87c774375c044cda6326278e304b5c2",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 19, \"assignee_id\": 3}",
+          "name": "assign_task"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-60",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 2736
+    }
+   },
+   "seconds": 0.0155
+  },
+  {
+   "request_sha": "8f2bfa440c8d3244ccab1d06020e7ee6effe9e5112464d94bffb1faefea655bb",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-61",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2867
+    }
+   },
+   "seconds": 0.0154
+  }
+ ],
+ "meta": {
+  "key": "t09|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

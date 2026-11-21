@@ -1,0 +1,65 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "637eb85da43c4ac73621d99ff13fb7755672bfd60ca1b6692d7eaa08d3c17f7a",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [37], \"remove_labels\": [\"design\"]}",
+          "name": "update_tasks"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-31",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 50,
+     "prompt_tokens": 1396
+    }
+   },
+   "seconds": 0.0154
+  },
+  {
+   "request_sha": "d4a1840e0c1aa241831d0db9675847b53387561b5935de704862d418c19cd435",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-32",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1515
+    }
+   },
+   "seconds": 0.0155
+  }
+ ],
+ "meta": {
+  "key": "t05|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

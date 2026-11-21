@@ -1,0 +1,131 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "353563da93d5712081d50bbb36b743dbb4c03fb7ac01c1689903365d58a5ec79",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"project\": \"Website Relaunch\"}",
+          "name": "projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-304",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 50,
+     "prompt_tokens": 1404
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "bfc45165f467b55eb6e6b4d1d393d92e471aca47e3597bd9925fb33ed10ed8b0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project\": 1, \"label\": \"docs\"}",
+          "name": "find_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-305",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 45,
+     "prompt_tokens": 1506
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "08e163451b754e458752667ad5fb7c44ca9970ac5327ac2a09c035596120b414",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [4, 19, 36, 56], \"remove_labels\": [\"docs\"]}",
+          "name": "update_tasks"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-306",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 52,
+     "prompt_tokens": 1805
+    }
+   },
+   "seconds": 0.0149
+  },
+  {
+   "request_sha": "7970ec07caf4675ae0179d5b1f1d9b5cc7b4285501aadd45721a41bec9444431",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-307",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2100
+    }
+   },
+   "seconds": 0.0154
+  }
+ ],
+ "meta": {
+  "key": "t30|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

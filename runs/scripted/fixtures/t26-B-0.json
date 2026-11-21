@@ -1,0 +1,131 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "d2c479efc65ea537250e0058d36c6b060a9d72b8609a463fc3a2fbef9829c316",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"action\": \"get\", \"user\": \"Priya Raman\"}",
+          "name": "users"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-246",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 47,
+     "prompt_tokens": 1407
+    }
+   },
+   "seconds": 0.0148
+  },
+  {
+   "request_sha": "47bee155846918135b55765ac63d85755af80be840889113191ea11074dd167b",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"assignee\": 1, \"overdue\": true}",
+          "name": "find_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-247",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 45,
+     "prompt_tokens": 1497
+    }
+   },
+   "seconds": 0.0151
+  },
+  {
+   "request_sha": "7ff4fdf12133a3e568ead3344e80fb162d71b17ff18adeb6c942f819205b7c44",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_ids\": [46, 60], \"add_labels\": [\"overdue\"]}",
+          "name": "update_tasks"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-248",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 50,
+     "prompt_tokens": 1677
+    }
+   },
+   "seconds": 0.0152
+  },
+  {
+   "request_sha": "3fa22b235970abd6747e29cbf53f9e30f2315014b5892ff4fa706ae00844589a",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-249",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 1865
+    }
+   },
+   "seconds": 0.0152
+  }
+ ],
+ "meta": {
+  "key": "t26|B|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

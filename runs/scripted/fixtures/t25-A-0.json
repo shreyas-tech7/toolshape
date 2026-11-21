@@ -1,0 +1,164 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "20e0676d59c2b49efeae9dda2c828b720f61b37d5e4e4d88ab728879d18de7db",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-229",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2411
+    }
+   },
+   "seconds": 0.0154
+  },
+  {
+   "request_sha": "97b6e636ed0929c32a6f4fae83b9568c01e23070a3d3e42466bfed4bcfb0c383",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"page\": 1, \"due_before\": \"2026-03-15\", \"project_id\": 4}",
+          "name": "list_tasks"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-230",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 52,
+     "prompt_tokens": 2694
+    }
+   },
+   "seconds": 0.0165
+  },
+  {
+   "request_sha": "742c269095d605eb7830554fb89a96324ffefad45a640d49426347fce4fed4e6",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 54, \"label\": \"overdue\"}",
+          "name": "add_label"
+         },
+         "id": "call_2",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-231",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 2990
+    }
+   },
+   "seconds": 0.0172
+  },
+  {
+   "request_sha": "481ccf198b97328ef4d342db2f77655ecb9cfc93826e5166a89f666276fdc7e0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"task_id\": 60, \"label\": \"overdue\"}",
+          "name": "add_label"
+         },
+         "id": "call_3",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-232",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 46,
+     "prompt_tokens": 3128
+    }
+   },
+   "seconds": 0.0179
+  },
+  {
+   "request_sha": "82e801fe1350a7b715870315a5f55efa5462ad2e7c438040ee73ddae3c6418d0",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-233",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 3263
+    }
+   },
+   "seconds": 0.0207
+  }
+ ],
+ "meta": {
+  "key": "t25|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}

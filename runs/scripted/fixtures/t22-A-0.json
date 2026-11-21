@@ -1,0 +1,98 @@
+{
+ "exchanges": [
+  {
+   "request_sha": "28f99738a59e53f05bf4b32634091988b49a9a582682af13dcc35184c0e8fbce",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{}",
+          "name": "list_projects"
+         },
+         "id": "call_0",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-194",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 37,
+     "prompt_tokens": 2403
+    }
+   },
+   "seconds": 0.0204
+  },
+  {
+   "request_sha": "b97a3c22bb5e3e8c1b8874eb3e0359fa64e9c153ac4c79de4a27b818fa015e47",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+       "content": "",
+       "role": "assistant",
+       "tool_calls": [
+        {
+         "function": {
+          "arguments": "{\"project_id\": 3}",
+          "name": "archive_project"
+         },
+         "id": "call_1",
+         "type": "function"
+        }
+       ]
+      }
+     }
+    ],
+    "id": "fake-195",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 42,
+     "prompt_tokens": 2686
+    }
+   },
+   "seconds": 0.0149
+  },
+  {
+   "request_sha": "f5df5d449c45145b5c616ee09489ac972e98d710facff15402882c543d2338c4",
+   "response": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+       "content": "Done.",
+       "role": "assistant"
+      }
+     }
+    ],
+    "id": "fake-196",
+    "model": "fake-oracle-replay",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 11,
+     "prompt_tokens": 2784
+    }
+   },
+   "seconds": 0.0154
+  }
+ ],
+ "meta": {
+  "key": "t22|A|0",
+  "model": "fake-oracle-replay",
+  "provider": "local fake endpoint"
+ }
+}
