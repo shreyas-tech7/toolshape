@@ -8,7 +8,7 @@
 - F22: the hand-off files are in place. The release commit is 84a5e62f4580d08cabb6747a2b6eb1a6ab52cec5. The commit after it records that SHA in CHANGELOG.md, docs/HUMAN_STEPS.md and HANDOVER.md and changes only hand-off files.
 
 ## Next
-- Shreyas: the steps in docs/HUMAN_STEPS.md (pull request, tag, a real model run, making the repo public).
+- Shreyas: the steps in docs/HUMAN_STEPS.md (pull request, tag, a real model run).
 - Stretch: a fourth shape that loads tool definitions on demand.
 
 ## Open blockers

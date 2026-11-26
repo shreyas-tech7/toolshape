@@ -66,7 +66,7 @@ This is the step the build could not do. There was no key, and the proxy refused
 
 ## 7. Make the repo public
 
-All history becomes public at that moment. Read `docs/build/BUILD_PROMPT.md` first.
+Done 2026-11-26: the repo is public.
 
 ## 8. Turn on Pages
 
@@ -87,7 +87,7 @@ The name `toolcut` answered 404 on PyPI on 2026-11-20. If you want the package, 
 
 ## 12. Decide whether the build prompt stays public
 
-`docs/build/BUILD_PROMPT.md` holds the full prompt the agents followed. Keep it, trim it or remove it before the repo goes public.
+`docs/build/BUILD_PROMPT.md` holds the full prompt the agents followed. Keep it, trim it or remove it.
 
 ## 13. Update the human checks in the README
 
