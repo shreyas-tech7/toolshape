@@ -85,6 +85,6 @@ TaskDesk is a small invented project tracker. Holding it fixed is what lets the 
 - `.env.example` names the key variables. `.gitignore` keeps keys and build output out. `.pre-commit-config.yaml` runs gitleaks.
 - `LICENSE` is MIT. `CHANGELOG.md`, `CONTRIBUTING.md`, `docs/GITHUB_ABOUT.md` and `docs/topics.txt` are for the GitHub page.
 - `CLAUDE.md`, `PROJECT_CONTEXT.md`, `PROGRESS.md`, `feature_list.json`, `HANDOVER.md`, `DECISIONS.md` and `BLOCKERS.md` let a new session pick up the work.
-- `docs/PLAN.md`, `docs/ENVIRONMENT.md` and `docs/TOOLING.md` record the plan, the machine and the tools. `docs/build/BUILD_PROMPT.md` is the prompt the build followed.
+- `docs/PLAN.md` and `docs/ENVIRONMENT.md` record the plan and the machine. `docs/build/BUILD_PROMPT.md` is the prompt the build followed.
 - `docs/ADDING_A_SHAPE.md` is the shape guide. `docs/SECURITY_CHECKS.md` covers the scanner and the sandbox.
-- `docs/INTERVIEW_QA.md` and this WALKTHROUGH.md are the study kit. `docs/RELEASE_CHECK.md`, `docs/HUMAN_STEPS.md` and `docs/handoff/COWORK_PROMPT.md` are the hand-off.
+- `docs/INTERVIEW_QA.md` and this WALKTHROUGH.md are the study kit. `docs/RELEASE_CHECK.md` and `docs/HUMAN_STEPS.md` are the hand-off.
